@@ -1,0 +1,660 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>INV-2026-0042</title>
+<style>
+@page { size: 210mm 297mm; margin: 16mm; }
+:root {
+  /* Type is drawn for A4; on a smaller sheet every size takes a larger share
+     of the paper, so type alone is scaled. Margins, rule weights and cell
+     padding are physical measurements of the printed page and are not. */
+  --type-scale: 1;
+  --page-w: 210mm;
+  --page-h: 297mm;
+  --content-h: 265mm;
+  --page-break-line: transparent;
+  --divider-paint: none;
+  /* The 1 is the slice: stretch the stripe along the edge instead of cutting
+     it into corners. */
+  --divider-image: none;
+  --divider-weight: max(var(--rule-strong-w), 0.4mm);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { margin: 0; padding: 0; background: var(--paper); }
+
+body { width: auto; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-body);
+  font-size: calc(var(--size-body) * var(--type-scale));
+  line-height: var(--line-height);
+  color: var(--ink);
+  background-color: var(--paper);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  text-rendering: geometricPrecision;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+h1, h2, h3, p, ul, ol, table, figure { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+img { max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+
+table { border-collapse: collapse; width: 100%; }
+
+/* Figures line up in a column of money only if every digit is the same
+   width; the rest of the page can stay proportional. */
+.num, td.num, th.num { font-family: var(--font-num); font-variant-numeric: tabular-nums lining-nums; }
+
+/* Pagination. A table header repeats on the second sheet, a row is never
+   split down the middle, and the totals never arrive on a page of their own
+   without at least some of what they total. */
+thead { display: table-header-group; }
+tfoot { display: table-footer-group; }
+tr { break-inside: avoid; page-break-inside: avoid; }
+.avoid-break { break-inside: avoid; page-break-inside: avoid; }
+.page-break { break-before: page; page-break-before: always; }
+
+/* Section dividers.
+
+   Templates mark the rules that separate one part of the sheet from another
+   with the brand-rule class, and say which edge the rule sits on with
+   rule-under or rule-over. The chosen style is painted into the border that
+   element already carries, so a template that marks nothing keeps its plain
+   rules and a divider set to plain paints nothing at all. */
+.brand-rule {
+  border-image: var(--divider-image);
+}
+
+/* A table drawn with collapsed borders throws border images away, so a rule
+   that lives on cells is painted as a stripe across the top or bottom of each
+   one instead. It lands in the same place and reads the same on paper. */
+
+
+
+
+/* The stamp a paid invoice carries. Set in the accent, turned off its axis,
+   and never in the way of a figure: it sits behind the totals block. */
+.paid-stamp {
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: rotate(-11deg);
+  border: calc(var(--rule-strong-w) * 2) solid var(--accent);
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: calc(var(--size-heading) * var(--type-scale) * 1.6);
+  padding: 1.5mm 4mm;
+  border-radius: var(--radius);
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+:root {
+  --paper: #FFFFFF;
+  --ink: #1C1418;
+  --ink-soft: #77676B;
+  --accent: #7A1F2B;
+  --accent-ink: #FFFFFF;
+  --line: #E0D9DA;
+  --line-strong: #9C8B8E;
+  --band-bg: #2C1C20;
+  --band-ink: #FBF7F5;
+  --zebra: #FAF6F5;
+  --font-display: Cambria, Georgia, 'Times New Roman', serif;
+  --font-body: Cambria, Georgia, 'Times New Roman', serif;
+  --font-num: Cambria, Georgia, 'Times New Roman', serif;
+  --size-title: 8mm;
+  --size-heading: 3.6mm;
+  --size-body: 3.05mm;
+  --size-small: 2.5mm;
+  --size-total: 4.8mm;
+  --weight-title: 700;
+  --weight-heading: 600;
+  --track-title: 0.01em;
+  --track-label: 0.16em;
+  --case-title: none;
+  --case-label: uppercase;
+  --line-height: 1.4;
+  --rule-w: 0.2mm;
+  --rule-strong-w: 0.5mm;
+  --radius: 0mm;
+  --cell-pad-x: 2.4mm;
+  --cell-pad-y: 2mm;
+  --page-margin: 16mm;
+  --block-gap: 7mm;
+  --head-gap: 7mm;
+  --table-gap: 6mm;
+  --logo-width: 34mm;
+}
+
+
+/* template: classic-statement */
+.letterhead {
+  text-align: center;
+  padding-bottom: var(--cell-pad-y);
+  border-bottom: var(--rule-strong-w) solid var(--ink);
+}
+
+.logo {
+  display: block;
+  width: var(--logo-width);
+  height: auto;
+  margin: 0 auto 3mm;
+}
+
+.house {
+  font-family: var(--font-display);
+  font-weight: var(--weight-title);
+  font-size: calc(var(--size-heading) * var(--type-scale) * 1.5);
+  letter-spacing: var(--track-title);
+  text-transform: var(--case-title);
+}
+
+.house-address,
+.house-contact,
+.house-ids {
+  color: var(--ink-soft);
+  font-size: calc(var(--size-small) * var(--type-scale));
+  line-height: 1.5;
+  margin-top: 0.8mm;
+}
+
+.house-address span + span::before,
+.house-contact span + span::before,
+.house-ids span + span::before {
+  content: '·';
+  margin: 0 1.4mm;
+  color: var(--line-strong);
+}
+
+/* The word "Invoice", set as a ruled band across the sheet — the device a
+   printed statement has used for a century to say what the paper is. */
+.doctype {
+  margin-top: var(--head-gap);
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: calc(var(--size-heading) * var(--type-scale) * 1.15);
+  font-weight: var(--weight-heading);
+  text-transform: uppercase;
+  letter-spacing: 0.34em;
+  /* the trailing space of the tracking, removed so the word stays centred */
+  text-indent: 0.34em;
+  padding: 1.6mm 0;
+  border-top: var(--rule-w) solid var(--line-strong);
+  border-bottom: var(--rule-w) solid var(--line-strong);
+  color: var(--accent);
+}
+
+.doctitle {
+  text-align: center;
+  margin-top: 2mm;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+/* ----------------------------------------------------- who and what for */
+
+.statement {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--block-gap);
+  margin-top: var(--block-gap);
+}
+
+.cap {
+  font-family: var(--font-display);
+  text-transform: var(--case-label);
+  letter-spacing: var(--track-label);
+  font-size: calc(var(--size-small) * var(--type-scale));
+  color: var(--ink-soft);
+}
+
+.addressee { max-width: 85mm; line-height: 1.5; }
+
+.addressee-name {
+  font-family: var(--font-display);
+  font-weight: var(--weight-heading);
+  font-size: calc(var(--size-heading) * var(--type-scale));
+  margin-top: 1.8mm;
+}
+
+.particulars {
+  width: auto;
+  min-width: 62mm;
+  border: var(--rule-w) solid var(--line-strong);
+}
+
+.particulars th,
+.particulars td {
+  padding: 1.4mm var(--cell-pad-x);
+  border-bottom: var(--rule-w) solid var(--line);
+  font-size: calc(var(--size-small) * var(--type-scale));
+}
+
+.particulars tr:last-child th,
+.particulars tr:last-child td { border-bottom: 0; }
+
+.particulars th {
+  text-align: left;
+  font-weight: 400;
+  color: var(--ink-soft);
+  background: var(--zebra);
+  white-space: nowrap;
+}
+
+.particulars td { font-weight: 600; text-align: right; }
+
+/* ------------------------------------------------------------- the table */
+
+.items {
+  margin-top: var(--table-gap);
+  border: var(--rule-w) solid var(--line-strong);
+}
+
+.items thead th {
+  text-align: left;
+  background: var(--band-bg);
+  color: var(--band-ink);
+  font-family: var(--font-display);
+  font-weight: var(--weight-heading);
+  text-transform: var(--case-label);
+  letter-spacing: var(--track-label);
+  font-size: calc(var(--size-small) * var(--type-scale));
+  padding: var(--cell-pad-y) var(--cell-pad-x);
+}
+
+.items td {
+  padding: var(--cell-pad-y) var(--cell-pad-x);
+  border-bottom: var(--rule-w) solid var(--line);
+  border-right: var(--rule-w) solid var(--line);
+  vertical-align: top;
+}
+
+.items td:last-child { border-right: 0; }
+.items tbody tr:last-child td { border-bottom: 0; }
+.items tr.is-odd td { background: var(--zebra); }
+
+.num { text-align: right; }
+
+.col-desc { width: 48%; }
+.col-n { width: 9mm; color: var(--ink-soft); }
+.col-qty { width: 16mm; }
+.col-unit { width: 18mm; color: var(--ink-soft); }
+.col-price { width: 25mm; }
+.col-disc { width: 20mm; }
+.col-tax { width: 18mm; color: var(--ink-soft); }
+.col-amount { width: 28mm; font-weight: 600; }
+
+.desc { display: block; }
+
+.details {
+  display: block;
+  color: var(--ink-soft);
+  font-size: calc(var(--size-small) * var(--type-scale));
+  font-style: italic;
+  line-height: 1.45;
+  margin-top: 0.7mm;
+}
+
+/* ------------------------------------------------------ totals and close */
+
+.close {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--block-gap);
+  margin-top: var(--block-gap);
+}
+
+/* min-width: 0 keeps a long bank reference inside this column instead of
+   letting it widen the row and overlap the figures beside it. */
+.close-left {
+  flex: 1 1 72mm;
+  min-width: 0;
+  max-width: 92mm;
+  display: grid;
+  gap: var(--block-gap);
+  align-content: start;
+}
+
+.block-text { margin-top: 1.6mm; line-height: 1.55; overflow-wrap: break-word; }
+
+.pay { margin-top: 1.8mm; width: 100%; table-layout: fixed; }
+
+.pay th,
+.pay td {
+  padding: 0.9mm 0;
+  font-size: calc(var(--size-small) * var(--type-scale));
+  border-bottom: var(--rule-w) dotted var(--line-strong);
+}
+
+.pay th {
+  width: 26mm;
+  text-align: left;
+  font-weight: 400;
+  color: var(--ink-soft);
+  padding-right: 4mm;
+}
+
+.pay td {
+  text-align: right;
+  font-family: var(--font-num);
+  overflow-wrap: anywhere;
+}
+
+.pay-link { margin-top: 1.4mm; color: var(--accent); word-break: break-all; }
+
+.totals { position: relative; flex: 0 1 72mm; min-width: 64mm; }
+
+.total-table { border: var(--rule-w) solid var(--line-strong); }
+
+.total-table th,
+.total-table td {
+  padding: 1.5mm var(--cell-pad-x);
+  border-bottom: var(--rule-w) solid var(--line);
+}
+
+.total-table th {
+  text-align: left;
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+
+.total-table td { text-align: right; }
+
+.total-table tbody tr:last-child th,
+.total-table tbody tr:last-child td { border-bottom: 0; }
+
+.grand th,
+.grand td {
+  border-top: var(--rule-strong-w) solid var(--ink);
+  border-bottom: 0;
+  background: var(--zebra);
+  padding-top: 2mm;
+  padding-bottom: 2mm;
+}
+
+.grand th {
+  font-family: var(--font-display);
+  text-transform: var(--case-label);
+  letter-spacing: var(--track-label);
+  font-size: calc(var(--size-small) * var(--type-scale));
+  color: var(--ink);
+}
+
+.grand td {
+  font-family: var(--font-display);
+  font-size: calc(var(--size-total) * var(--type-scale));
+  font-weight: var(--weight-title);
+  color: var(--accent);
+}
+
+.grand-note {
+  text-align: right;
+  color: var(--ink-soft);
+  font-size: calc(var(--size-small) * var(--type-scale));
+  margin-top: 1mm;
+}
+
+/* --------------------------------------------------------------- terms */
+
+.terms {
+  margin-top: var(--block-gap);
+  padding-top: var(--cell-pad-y);
+  border-top: var(--rule-w) solid var(--line);
+}
+
+.terms-text {
+  margin-top: 1.4mm;
+  color: var(--ink-soft);
+  font-size: calc(var(--size-small) * var(--type-scale));
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------- remittance */
+
+.remittance { margin-top: calc(var(--block-gap) * 1.6); }
+
+/* The cut line. A dashed rule with the instruction sitting on it, the way a
+   real remittance advice is printed. */
+.tear {
+  position: relative;
+  text-align: center;
+  font-size: calc(var(--size-small) * var(--type-scale));
+  color: var(--ink-soft);
+  text-transform: var(--case-label);
+  letter-spacing: var(--track-label);
+  border-top: var(--rule-w) dashed var(--line-strong);
+  padding-top: 2.4mm;
+}
+
+.remittance-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--block-gap);
+  margin-top: 3mm;
+}
+
+.remittance-body > div {
+  flex: 1 1 60mm;
+  min-width: 0;
+}
+
+.remit-strong {
+  font-family: var(--font-display);
+  font-weight: var(--weight-heading);
+  font-size: calc(var(--size-heading) * var(--type-scale));
+  margin-top: 1.4mm;
+}
+
+.remit-lines {
+  margin-top: 1mm;
+  color: var(--ink-soft);
+  font-size: calc(var(--size-small) * var(--type-scale));
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.remit-lines span { display: block; }
+
+.remit-facts { flex: 0 1 72mm; width: auto; min-width: 62mm; }
+
+.remit-facts th,
+.remit-facts td {
+  padding: 1.1mm 0;
+  font-size: calc(var(--size-small) * var(--type-scale));
+  border-bottom: var(--rule-w) solid var(--line);
+}
+
+.remit-facts th {
+  text-align: left;
+  font-weight: 400;
+  color: var(--ink-soft);
+  padding-right: 6mm;
+}
+
+.remit-facts td { text-align: right; }
+
+.remit-total th,
+.remit-total td {
+  border-bottom: 0;
+  border-top: var(--rule-strong-w) solid var(--ink);
+  padding-top: 1.8mm;
+  font-weight: 700;
+  font-size: calc(var(--size-body) * var(--type-scale));
+}
+
+.remit-total td { color: var(--accent); }
+
+</style>
+</head>
+<body>
+<header class="letterhead brand-rule rule-under">
+  
+  <p class="house">Harbourline Studio</p>
+  <p class="house-address"><span>14 Wapping High Street</span><span>London E1W 2NA</span><span>United Kingdom</span></p>
+  <p class="house-contact">
+    <span>accounts@harbourline.co</span>
+    <span>+44 20 7946 0102</span>
+    <span>harbourline.co</span>
+  </p>
+  <p class="house-ids"><span>VAT Number GB 428 9917 33</span></p>
+</header>
+
+<p class="doctype">Invoice</p>
+
+
+<section class="statement avoid-break">
+  <div class="addressee">
+    <p class="cap">Bill to</p>
+    <p class="addressee-name">Meridian Coffee Roasters Ltd</p>
+    <p>Priya Raman</p>
+    <p>Unit 6, Grainstore Yard</p><p>Bristol BS1 6QH</p><p>United Kingdom</p>
+    <p>ap@meridianroasters.com</p>
+    <p>VAT Number GB 771 2043 89</p>
+  </div>
+
+  <table class="particulars">
+    <tbody>
+      <tr><th>Invoice number</th><td class="num">INV-2026-0042</td></tr>
+      <tr><th>Issued</th><td class="num">16 September 2026</td></tr>
+      
+      <tr><th>Due</th><td class="num">16 October 2026</td></tr>
+      <tr><th>Terms</th><td class="num">Net 30</td></tr>
+      <tr><th>Purchase order</th><td class="num">PO-7781</td></tr>
+      
+    </tbody>
+  </table>
+</section>
+
+<table class="items">
+  <thead>
+    <tr>
+      
+      <th class="col-desc">Description</th>
+      <th class="col-qty num">Qty</th>
+      <th class="col-unit">Unit</th>
+      <th class="col-price num">Unit price</th>
+      
+      
+      <th class="col-amount num">Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="">
+      
+      <td class="col-desc">
+        <span class="desc">Brand identity system</span>
+        <span class="details">Wordmark, palette and a 24-page guide</span>
+      </td>
+      <td class="col-qty num">1</td>
+      <td class="col-unit">item</td>
+      <td class="col-price num">4,800.00</td>
+      
+      
+      <td class="col-amount num">4,800.00</td>
+    </tr>
+    <tr class="is-odd">
+      
+      <td class="col-desc">
+        <span class="desc">Packaging artwork</span>
+        
+      </td>
+      <td class="col-qty num">6</td>
+      <td class="col-unit">item</td>
+      <td class="col-price num">320.00</td>
+      
+      
+      <td class="col-amount num">1,920.00</td>
+    </tr>
+    <tr class="">
+      
+      <td class="col-desc">
+        <span class="desc">Studio time</span>
+        <span class="details">Photography direction, two days on site</span>
+      </td>
+      <td class="col-qty num">14</td>
+      <td class="col-unit">hour</td>
+      <td class="col-price num">95.00</td>
+      
+      
+      <td class="col-amount num">1,330.00</td>
+    </tr>
+  </tbody>
+</table>
+
+<section class="close">
+  <div class="close-left">
+    <div class="block avoid-break">
+      <p class="cap">How to pay</p>
+      
+      <table class="pay">
+        <tbody>
+          <tr><th>Bank</th><td class="num">Starling Bank</td></tr><tr><th>Account name</th><td class="num">Harbourline Studio Ltd</td></tr><tr><th>IBAN</th><td class="num">GB29 SRLG 6083 9912 3456 78</td></tr><tr><th>BIC &#x2F; SWIFT</th><td class="num">SRLGGB2L</td></tr><tr><th>Payment reference</th><td class="num">INV-2026-0042</td></tr>
+        </tbody>
+      </table>
+      
+    </div>
+
+    <div class="block avoid-break">
+      <p class="cap">Notes</p>
+      <p class="block-text">Thanks — it was a pleasure working on this.<br>Phase three starts in April.</p>
+    </div>
+  </div>
+
+  <div class="totals avoid-break">
+    
+    <table class="total-table">
+      <tbody>
+        <tr><th>Subtotal</th><td class="num">£8,050.00</td></tr>
+        <tr><th>VAT 20%</th><td class="num">£1,610.00</td></tr>
+      </tbody>
+      <tfoot>
+        <tr class="grand brand-rule rule-over">
+          <th>Amount due</th>
+          <td class="num">£9,660.00</td>
+        </tr>
+      </tfoot>
+    </table>
+    
+  </div>
+</section>
+
+<section class="terms avoid-break">
+  <p class="cap">Terms and conditions</p>
+  <p class="terms-text">Interest is charged at 8% above Bank of England base rate on overdue accounts, under the Late Payment of Commercial Debts (Interest) Act 1998.</p>
+</section>
+
+<section class="remittance avoid-break">
+  <p class="tear">Detach and return with payment</p>
+  <div class="remittance-body">
+    <div>
+      <p class="cap">How to pay</p>
+      <p class="remit-strong">Harbourline Studio</p>
+      <p class="remit-lines"><span>Bank Starling Bank</span><span>Account name Harbourline Studio Ltd</span><span>IBAN GB29 SRLG 6083 9912 3456 78</span><span>BIC &#x2F; SWIFT SRLGGB2L</span><span>Payment reference INV-2026-0042</span></p>
+    </div>
+    <table class="remit-facts">
+      <tbody>
+        <tr><th>Invoice number</th><td class="num">INV-2026-0042</td></tr>
+        <tr><th>Bill to</th><td class="num">Meridian Coffee Roasters Ltd</td></tr>
+        <tr><th>Due</th><td class="num">16 October 2026</td></tr>
+        <tr class="remit-total"><th>Amount due</th><td class="num">£9,660.00</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+</body>
+</html>

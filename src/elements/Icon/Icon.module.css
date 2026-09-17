@@ -1,0 +1,8 @@
+/* An icon sits on the text baseline of whatever it is inside and takes that
+   element's colour. It never carries a colour of its own. */
+
+.icon {
+  display: block;
+  flex: none;
+  color: currentColor;
+}

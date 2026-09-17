@@ -1,0 +1,26 @@
+/* Both of these clip rather than grow. The panes inside them do their own
+   scrolling; nothing is allowed to push the layout past the window. */
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--surface-2);
+}
+
+.main {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.loading {
+  display: grid;
+  place-items: center;
+  flex: 1 1 auto;
+  color: var(--ink-3);
+  font-size: var(--text-md);
+}

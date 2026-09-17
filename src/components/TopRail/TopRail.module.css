@@ -1,0 +1,92 @@
+.rail {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  height: var(--rail-h);
+  padding: 0 var(--sp-3);
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+  flex: none;
+}
+
+.nav {
+  display: flex;
+  gap: 2px;
+  flex: none;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  height: 30px;
+  padding: 0 var(--sp-3);
+  border: 0;
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--ink-2);
+  font-size: var(--text-md);
+  transition: background var(--duration) var(--ease), color var(--duration) var(--ease);
+}
+
+.tab:hover {
+  background: var(--surface-3);
+  color: var(--ink);
+}
+
+.tabOn,
+.tabOn:hover {
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  font-weight: 600;
+}
+
+.middle {
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+}
+
+/* The invoice's number and whether it is on disk, said in one place. */
+.docname {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-3);
+  min-width: 0;
+}
+
+.number {
+  font-family: var(--font-figure);
+  font-size: var(--text-md);
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.state {
+  font-size: var(--text-xs);
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+  flex: none;
+}
+
+.divider {
+  width: 1px;
+  height: 18px;
+  margin: 0 var(--sp-2);
+  background: var(--line);
+}
+
+@media (max-width: 1180px) {
+  .tab span { display: none; }
+  .middle { justify-content: flex-start; }
+}

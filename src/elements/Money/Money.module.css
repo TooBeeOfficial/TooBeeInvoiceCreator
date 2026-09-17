@@ -1,0 +1,16 @@
+.money {
+  font-family: var(--font-figure);
+  font-variant-numeric: tabular-nums lining-nums;
+  white-space: nowrap;
+}
+
+.emphasis {
+  font-size: var(--text-lg);
+  font-weight: 600;
+}
+
+.zero { color: var(--ink-3); }
+
+/* A credit is not an error, so it is never red. The formatter has already
+   put the minus sign where this locale puts it. */
+.negative { color: var(--ink-2); }

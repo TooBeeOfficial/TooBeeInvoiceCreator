@@ -1,0 +1,18 @@
+/* The holder is sized to the scaled sheet so the page around it lays out
+   correctly; the frame itself stays at full size and is scaled from its top
+   left corner, which keeps the millimetres inside honest. */
+
+.holder {
+  position: relative;
+  flex: none;
+  background: #FFFFFF;
+  box-shadow: var(--shadow-sheet);
+}
+
+.frame {
+  display: block;
+  border: 0;
+  transform-origin: top left;
+  background: #FFFFFF;
+  color-scheme: light;
+}

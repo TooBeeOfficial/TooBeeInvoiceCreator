@@ -1,0 +1,92 @@
+.panel {
+  display: grid;
+  gap: var(--sp-4);
+  min-width: 0;
+  padding: var(--sp-5);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+
+/* The heading and the block's own controls share a line while they fit, and
+   the controls drop to their own line when they do not — which happens as
+   soon as the form column is dragged in, not only on a small window. */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--sp-2) var(--sp-4);
+  min-height: 22px;
+}
+
+.heading {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.title {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.description {
+  font-size: var(--text-sm);
+  color: var(--ink-3);
+  line-height: 1.45;
+}
+
+.action {
+  flex: 0 1 auto;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin-left: auto;
+}
+
+/* The whole title row opens the section, not a small arrow beside it. */
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin: calc(var(--sp-2) * -1);
+  padding: var(--sp-2);
+  border: 0;
+  border-radius: var(--radius);
+  background: transparent;
+  text-align: left;
+  min-width: 0;
+}
+
+.toggle:hover { background: var(--surface-2); }
+
+.chevron { color: var(--ink-3); }
+
+.summary {
+  font-size: var(--text-sm);
+  color: var(--ink-3);
+  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.summary::before {
+  content: '·';
+  margin-right: var(--sp-2);
+}
+
+.body {
+  display: grid;
+  gap: var(--sp-4);
+  min-width: 0;
+}
+
+/* A narrow pane gets its padding back as room for the fields. */
+@container editor-form (max-width: 430px) {
+  .panel { padding: var(--sp-4); }
+}

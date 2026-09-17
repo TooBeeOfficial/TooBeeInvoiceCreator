@@ -1,0 +1,97 @@
+/* The switch on the title row, drawn as the column switches over the items
+   are drawn: a pill that is filled when it is on. A switch that changes its
+   own words — "Print" becoming "Do not print" — makes the reader work out
+   whether it is reporting a state or offering an action. This one keeps its
+   word and changes its fill. */
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  padding: 2px var(--sp-3);
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-2);
+  font-size: var(--text-xs);
+  transition: background var(--duration) var(--ease), color var(--duration) var(--ease), border-color var(--duration) var(--ease);
+}
+
+.toggle:hover {
+  background: var(--surface-3);
+  color: var(--ink);
+}
+
+.on {
+  background: var(--accent-soft);
+  border-color: var(--accent-ink);
+  color: var(--accent-ink);
+}
+
+.on:hover {
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+}
+
+/* The code beside what it says, and under each other once the form column
+   is too narrow to hold both. */
+.body {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-5);
+  flex-wrap: wrap;
+}
+
+/* White ground under it whatever the app's theme is doing: a scanner reads
+   dark on light, and a code shown dark-on-dark is one that reads on paper
+   and not on the screen the user is checking it on. */
+.code {
+  flex: none;
+  width: 116px;
+  height: 116px;
+  padding: var(--sp-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+}
+
+.what {
+  flex: 1 1 200px;
+  min-width: 0;
+}
+
+.rows {
+  display: grid;
+  gap: var(--sp-2);
+}
+
+.row {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+}
+
+.row dt {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+}
+
+.row dd {
+  font-size: var(--text-sm);
+  color: var(--ink);
+  /* An IBAN is 34 characters with nowhere to break: let it wrap inside
+     itself rather than push the panel wider than the column. */
+  overflow-wrap: anywhere;
+}
+
+.note {
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: var(--ink-3);
+}
+
+.what .note { margin-top: var(--sp-3); }
+
+/* A checksum that fails is not a note, it is a number that is wrong. */
+.warn { color: var(--danger); }

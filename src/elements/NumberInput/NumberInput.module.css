@@ -1,0 +1,25 @@
+.wrap {
+  position: relative;
+  display: block;
+  min-width: 0;
+}
+
+.input {
+  composes: control from '../../styles/control.module.css';
+  composes: figure from '../../styles/control.module.css';
+}
+
+/* Room for the unit that sits inside the field, so a long figure never runs
+   underneath it. Scoped through the wrapper so it outranks the shared
+   control body whatever order the stylesheets land in. */
+.wrap .hasSuffix { padding-right: 30px; }
+
+.suffix {
+  position: absolute;
+  top: 50%;
+  right: var(--sp-3);
+  transform: translateY(-50%);
+  font-size: var(--text-sm);
+  color: var(--ink-3);
+  pointer-events: none;
+}

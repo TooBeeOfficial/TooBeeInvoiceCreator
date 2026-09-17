@@ -1,0 +1,50 @@
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  border-radius: 999px;
+  background: var(--tone-soft);
+  color: var(--tone);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.sm {
+  padding: 1px var(--sp-2) 1px var(--sp-2);
+  font-size: var(--text-xs);
+}
+
+.md {
+  padding: 2px var(--sp-3) 2px var(--sp-3);
+  font-size: var(--text-sm);
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--tone);
+  flex: none;
+}
+
+.word { letter-spacing: 0.01em; }
+
+.note {
+  color: var(--tone);
+  opacity: 0.78;
+  font-weight: 500;
+}
+
+.note::before {
+  content: '·';
+  margin-right: var(--sp-2);
+  opacity: 0.7;
+}
+
+/* One colour per state, taken from the app palette so the list, the pill and
+   the editor's status control can never drift apart. */
+.draft { --tone: var(--st-draft); --tone-soft: var(--st-draft-soft); }
+.sent { --tone: var(--st-sent); --tone-soft: var(--st-sent-soft); }
+.paid { --tone: var(--st-paid); --tone-soft: var(--st-paid-soft); }
+.overdue { --tone: var(--st-overdue); --tone-soft: var(--st-overdue-soft); }
+.void { --tone: var(--st-void); --tone-soft: var(--st-void-soft); }

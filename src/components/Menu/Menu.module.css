@@ -1,0 +1,68 @@
+.holder {
+  position: relative;
+  display: inline-flex;
+}
+
+/* Fixed, not absolute: the panel is drawn at the end of the document and
+   positioned from where its button is on the screen, so that a table which
+   scrolls sideways cannot clip it. The offsets are set by the component.
+
+   Above the dialogs, because a menu opened from inside one has to be
+   reachable, and a menu closes the moment anything else is clicked. */
+.menu {
+  position: fixed;
+  z-index: 90;
+  min-width: 216px;
+  padding: var(--sp-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow-lg);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  width: 100%;
+  padding: var(--sp-2) var(--sp-3);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--ink);
+  text-align: left;
+}
+
+.item:hover:not(:disabled) { background: var(--surface-3); }
+
+.item:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.icon {
+  width: 15px;
+  flex: none;
+  margin-top: 2px;
+  color: var(--ink-3);
+}
+
+.text {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+}
+
+.label { font-size: var(--text-md); }
+
+.note {
+  font-size: var(--text-xs);
+  color: var(--ink-3);
+  line-height: 1.4;
+}
+
+.danger { color: var(--danger); }
+.danger .icon { color: var(--danger); }
+.danger:hover:not(:disabled) { background: var(--danger-soft); }

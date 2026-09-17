@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>INV-2026-0042</title>
+<style>
+@page { size: 210mm 297mm; margin: 18mm; }
+:root {
+  /* Type is drawn for A4; on a smaller sheet every size takes a larger share
+     of the paper, so type alone is scaled. Margins, rule weights and cell
+     padding are physical measurements of the printed page and are not. */
+  --type-scale: 1;
+  --page-w: 210mm;
+  --page-h: 297mm;
+  --content-h: 261mm;
+  --page-break-line: transparent;
+  --divider-paint: none;
+  /* The 1 is the slice: stretch the stripe along the edge instead of cutting
+     it into corners. */
+  --divider-image: none;
+  --divider-weight: max(var(--rule-strong-w), 0.4mm);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { margin: 0; padding: 0; background: var(--paper); }
+
+body { width: auto; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-body);
+  font-size: calc(var(--size-body) * var(--type-scale));
+  line-height: var(--line-height);
+  color: var(--ink);
+  background-color: var(--paper);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  text-rendering: geometricPrecision;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+h1, h2, h3, p, ul, ol, table, figure { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+img { max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+
+table { border-collapse: collapse; width: 100%; }
+
+/* Figures line up in a column of money only if every digit is the same
+   width; the rest of the page can stay proportional. */
+.num, td.num, th.num { font-family: var(--font-num); font-variant-numeric: tabular-nums lining-nums; }
+
+/* Pagination. A table header repeats on the second sheet, a row is never
+   split down the middle, and the totals never arrive on a page of their own
+   without at least some of what they total. */
+thead { display: table-header-group; }
+tfoot { display: table-footer-group; }
+tr { break-inside: avoid; page-break-inside: avoid; }
+.avoid-break { break-inside: avoid; page-break-inside: avoid; }
+.page-break { break-before: page; page-break-before: always; }
+
+/* Section dividers.
+
+   Templates mark the rules that separate one part of the sheet from another
+   with the brand-rule class, and say which edge the rule sits on with
+   rule-under or rule-over. The chosen style is painted into the border that
+   element already carries, so a template that marks nothing keeps its plain
+   rules and a divider set to plain paints nothing at all. */
+.brand-rule {
+  border-image: var(--divider-image);
+}
+
+/* A table drawn with collapsed borders throws border images away, so a rule
+   that lives on cells is painted as a stripe across the top or bottom of each
+   one instead. It lands in the same place and reads the same on paper. */
+
+
+
+
+/* The stamp a paid invoice carries. Set in the accent, turned off its axis,
+   and never in the way of a figure: it sits behind the totals block. */
+.paid-stamp {
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: rotate(-11deg);
+  border: calc(var(--rule-strong-w) * 2) solid var(--accent);
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: calc(var(--size-heading) * var(--type-scale) * 1.6);
+  padding: 1.5mm 4mm;
+  border-radius: var(--radius);
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+:root {
+  --paper: #FFFFFF;
+  --ink: #141414;
+  --ink-soft: #77726C;
+  --accent: #9A5B23;
+  --accent-ink: #FFFFFF;
+  --line: #E2DED8;
+  --line-strong: #8C877F;
+  --band-bg: #16191F;
+  --band-ink: #FFFFFF;
+  --zebra: #F6F7F9;
+  --font-display: Bahnschrift, 'DIN Next', 'Segoe UI', sans-serif;
+  --font-body: 'Segoe UI', system-ui, sans-serif;
+  --font-num: Bahnschrift, 'Segoe UI', sans-serif;
+  --size-title: 15mm;
+  --size-heading: 3.8mm;
+  --size-body: 3mm;
+  --size-small: 2.4mm;
+  --size-total: 11mm;
+  --weight-title: 700;
+  --weight-heading: 600;
+  --track-title: -0.035em;
+  --track-label: 0.2em;
+  --case-title: none;
+  --case-label: uppercase;
+  --line-height: 1.5;
+  --rule-w: 0.2mm;
+  --rule-strong-w: 0.7mm;
+  --radius: 0mm;
+  --cell-pad-x: 3mm;
+  --cell-pad-y: 3mm;
+  --page-margin: 18mm;
+  --block-gap: 10mm;
+  --head-gap: 12mm;
+  --table-gap: 6mm;
+  --logo-width: 26mm;
+}
+
+
+/* template: studio-bold */
+.head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--block-gap);
+}
+
+.eyebrow {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.4em;
+  text-indent: 0.4em;
+  font-size: calc(var(--size-small) * var(--type-scale));
+  color: var(--ink-soft);
+}
+
+/* The headline. Tight tracking and a line height under one, because at this
+   size the default leading opens a gap you could drive a bus through. */
+.number {
+  font-family: var(--font-display);
+  font-size: calc(var(--size-title) * var(--type-scale));
+  font-weight: var(--weight-title);
+  letter-spacing: var(--track-title);
+  line-height: 0.92;
+  margin-top: 2mm;
+  overflow-wrap: anywhere;
+}
+
+.logo {
+  flex: none;
+  display: block;
+  width: var(--logo-width);
+  height: auto;
+}
+
+.subject {
+  margin-top: 3mm;
+  font-size: calc(var(--size-heading) * var(--type-scale));
+  color: var(--ink-soft);
+  max-width: 120mm;
+}
+
+/* ------------------------------------------------------------- the parties */
+
+.columns {
+  display: flex;
+  gap: var(--block-gap);
+  margin-top: var(--head-gap);
+  padding-top: var(--cell-pad-y);
+  border-top: var(--rule-strong-w) solid var(--ink);
+}
+
+.column {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.cap {
+  font-family: var(--font-display);
+  text-transform: var(--case-label);
+  letter-spacing: var(--track-label);
+  font-size: calc(var(--size-small) * var(--type-scale));
+  color: var(--ink-soft);
+  margin-bottom: 1.6mm;
+}
+
+.cap-second { margin-top: 3mm; }
+
+.strong {
+  font-family: var(--font-display);
+  font-weight: var(--weight-heading);
+  font-size: calc(var(--size-heading) * var(--type-scale));
+  margin-bottom: 0.8mm;
+}
+
+.line {
+  line-height: 1.55;
+  font-size: calc(var(--size-body) * var(--type-scale));
+  overflow-wrap: break-word;
+}
+
+.key {
+  display: inline-block;
+  min-width: 24mm;
+  color: var(--ink-soft);
+}
+
+.link { color: var(--accent); word-break: break-all; }
+
+/* --------------------------------------------------------------- the table */
+
+.items { margin-top: var(--block-gap); }
+
+.items th {
+  text-align: left;
+  font-family: var(--font-display);
+  text-transform: var(--case-label);
+  letter-spacing: var(--track-label);
+  font-weight: var(--weight-heading);
+  font-size: calc(var(--size-small) * var(--type-scale));
+  color: var(--ink-soft);
+  padding: 0 var(--cell-pad-x) var(--cell-pad-y) 0;
+  border-bottom: var(--rule-strong-w) solid var(--ink);
+}
+
+.items td {
+  padding: var(--cell-pad-y) var(--cell-pad-x) var(--cell-pad-y) 0;
+  border-bottom: var(--rule-w) solid var(--line);
+  vertical-align: baseline;
+}
+
+.items th:last-child,
+.items td:last-child { padding-right: 0; }
+
+.num { text-align: right; }
+
+.col-desc { width: 48%; }
+.col-n { width: 9mm; color: var(--ink-soft); }
+.col-qty { width: 16mm; }
+.col-unit { width: 18mm; color: var(--ink-soft); }
+.col-price { width: 24mm; }
+.col-disc { width: 19mm; }
+.col-tax { width: 17mm; color: var(--ink-soft); }
+.col-amount { width: 28mm; }
+
+.desc {
+  display: block;
+  font-size: calc(var(--size-heading) * var(--type-scale) * 0.92);
+}
+
+.details {
+  display: block;
+  color: var(--ink-soft);
+  font-size: calc(var(--size-small) * var(--type-scale));
+  line-height: 1.5;
+  margin-top: 1mm;
+  max-width: 90mm;
+}
+
+.col-amount {
+  font-family: var(--font-display);
+  font-size: calc(var(--size-heading) * var(--type-scale) * 0.95);
+  font-weight: var(--weight-heading);
+}
+
+/* -------------------------------------------------------------- the total */
+
+.sum {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--block-gap);
+  margin-top: var(--block-gap);
+}
+
+.sum-rows {
+  display: grid;
+  gap: 1.4mm;
+  min-width: 52mm;
+}
+
+.sum-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8mm;
+  font-size: calc(var(--size-small) * var(--type-scale));
+}
+
+.sum-row dt { color: var(--ink-soft); }
+
+.grand {
+  flex: none;
+  text-align: right;
+  padding-top: var(--cell-pad-y);
+  border-top: var(--rule-strong-w) solid var(--ink);
+  min-width: 62mm;
+}
+
+.grand-label {
+  font-family: var(--font-display);
+  text-transform: var(--case-label);
+  letter-spacing: var(--track-label);
+  font-size: calc(var(--size-small) * var(--type-scale));
+  color: var(--ink-soft);
+}
+
+/* The second headline, and the sheet's last word. */
+.grand-value {
+  font-family: var(--font-display);
+  font-size: calc(var(--size-total) * var(--type-scale));
+  font-weight: var(--weight-title);
+  letter-spacing: var(--track-title);
+  line-height: 1;
+  margin-top: 1.5mm;
+  color: var(--accent);
+}
+
+.grand-note {
+  font-size: calc(var(--size-small) * var(--type-scale));
+  color: var(--ink-soft);
+  margin-top: 1.5mm;
+}
+
+/* ---------------------------------------------------------------- the foot */
+
+.foot {
+  display: flex;
+  gap: var(--block-gap);
+  margin-top: var(--block-gap);
+  padding-top: var(--cell-pad-y);
+  border-top: var(--rule-w) solid var(--line);
+}
+
+.foot-block {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.terms {
+  margin-top: var(--block-gap);
+}
+
+.terms-text {
+  color: var(--ink-soft);
+  font-size: calc(var(--size-small) * var(--type-scale));
+  line-height: 1.5;
+  overflow-wrap: break-word;
+}
+
+</style>
+</head>
+<body>
+<header class="head">
+  <div class="headline">
+    <p class="eyebrow">Invoice</p>
+    <h1 class="number">INV-2026-0042</h1>
+  </div>
+  
+</header>
+
+
+
+<section class="columns avoid-break brand-rule rule-over">
+  <div class="column">
+    <p class="cap">From</p>
+    <p class="strong">Harbourline Studio</p>
+    <p class="line">14 Wapping High Street</p><p class="line">London E1W 2NA</p><p class="line">United Kingdom</p>
+    <p class="line">accounts@harbourline.co</p>
+    <p class="line">+44 20 7946 0102</p>
+    <p class="line">VAT Number GB 428 9917 33</p>
+  </div>
+
+  <div class="column">
+    <p class="cap">Bill to</p>
+    <p class="strong">Meridian Coffee Roasters Ltd</p>
+    <p class="line">Priya Raman</p>
+    <p class="line">Unit 6, Grainstore Yard</p><p class="line">Bristol BS1 6QH</p><p class="line">United Kingdom</p>
+    <p class="line">ap@meridianroasters.com</p>
+    <p class="line">VAT Number GB 771 2043 89</p>
+  </div>
+
+  <div class="column">
+    <p class="cap">Issued</p>
+    <p class="strong">16 September 2026</p>
+    <p class="cap cap-second">Due</p>
+    <p class="strong">16 October 2026</p>
+    <p class="line">Net 30</p>
+    <p class="line">Purchase order PO-7781</p>
+    
+  </div>
+</section>
+
+<table class="items">
+  <thead>
+    <tr>
+      
+      <th class="col-desc">Description</th>
+      <th class="col-qty num">Qty</th>
+      <th class="col-unit">Unit</th>
+      <th class="col-price num">Unit price</th>
+      
+      
+      <th class="col-amount num">Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      
+      <td class="col-desc">
+        <span class="desc">Brand identity system</span>
+        <span class="details">Wordmark, palette and a 24-page guide</span>
+      </td>
+      <td class="col-qty num">1</td>
+      <td class="col-unit">item</td>
+      <td class="col-price num">4,800.00</td>
+      
+      
+      <td class="col-amount num">4,800.00</td>
+    </tr>
+    <tr>
+      
+      <td class="col-desc">
+        <span class="desc">Packaging artwork</span>
+        
+      </td>
+      <td class="col-qty num">6</td>
+      <td class="col-unit">item</td>
+      <td class="col-price num">320.00</td>
+      
+      
+      <td class="col-amount num">1,920.00</td>
+    </tr>
+    <tr>
+      
+      <td class="col-desc">
+        <span class="desc">Studio time</span>
+        <span class="details">Photography direction, two days on site</span>
+      </td>
+      <td class="col-qty num">14</td>
+      <td class="col-unit">hour</td>
+      <td class="col-price num">95.00</td>
+      
+      
+      <td class="col-amount num">1,330.00</td>
+    </tr>
+  </tbody>
+</table>
+
+<section class="sum avoid-break">
+  
+  <dl class="sum-rows">
+    <div class="sum-row"><dt>Subtotal</dt><dd class="num">£8,050.00</dd></div>
+    <div class="sum-row"><dt>VAT 20%</dt><dd class="num">£1,610.00</dd></div>
+  </dl>
+
+  <div class="grand brand-rule rule-over">
+    <p class="grand-label">Amount due</p>
+    <p class="grand-value num">£9,660.00</p>
+    
+  </div>
+</section>
+
+<section class="foot">
+  <div class="foot-block avoid-break">
+    <p class="cap">How to pay</p>
+    
+    <p class="line"><span class="key">Bank</span>Starling Bank</p><p class="line"><span class="key">Account name</span>Harbourline Studio Ltd</p><p class="line"><span class="key">IBAN</span>GB29 SRLG 6083 9912 3456 78</p><p class="line"><span class="key">BIC &#x2F; SWIFT</span>SRLGGB2L</p><p class="line"><span class="key">Payment reference</span>INV-2026-0042</p>
+    
+  </div>
+
+  <div class="foot-block avoid-break">
+    <p class="cap">Notes</p>
+    <p class="line">Thanks — it was a pleasure working on this.<br>Phase three starts in April.</p>
+  </div>
+</section>
+
+<section class="terms avoid-break">
+  <p class="terms-text">Interest is charged at 8% above Bank of England base rate on overdue accounts, under the Late Payment of Commercial Debts (Interest) Act 1998.</p>
+</section>
+
+</body>
+</html>

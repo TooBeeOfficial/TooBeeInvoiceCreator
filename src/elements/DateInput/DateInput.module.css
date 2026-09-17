@@ -1,0 +1,18 @@
+.input {
+  composes: control from '../../styles/control.module.css';
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* Chromium draws the picker button in its own colour, which disappears
+   against a dark panel. */
+.input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.55;
+  filter: var(--date-picker-filter, none);
+}
+
+.input::-webkit-calendar-picker-indicator:hover { opacity: 1; }
+
+:global([data-theme='dark']) .input::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}

@@ -1,0 +1,62 @@
+.wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  min-width: 0;
+}
+
+.range {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 18px;
+  margin: 0;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.range::-webkit-slider-runnable-track {
+  height: 3px;
+  border-radius: 2px;
+  background: var(--line-strong);
+}
+
+.range::-webkit-slider-thumb {
+  appearance: none;
+  width: 13px;
+  height: 13px;
+  margin-top: -5px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--accent);
+  transition: transform var(--duration) var(--ease);
+}
+
+.range:hover::-webkit-slider-thumb { transform: scale(1.12); }
+
+.range:focus-visible {
+  outline: none;
+}
+
+.range:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus) 35%, transparent);
+}
+
+.range:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* A fixed width so a row of these lines up down the inspector and the
+   numbers do not jitter as they change. */
+.readout {
+  flex: none;
+  min-width: 48px;
+  text-align: right;
+  font-family: var(--font-figure);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--text-sm);
+  color: var(--ink-2);
+}
+
+.unit {
+  color: var(--ink-3);
+  margin-left: 2px;
+}

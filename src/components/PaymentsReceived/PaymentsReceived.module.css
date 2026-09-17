@@ -1,0 +1,48 @@
+.block {
+  display: grid;
+  gap: var(--sp-4);
+  min-width: 0;
+}
+
+.list {
+  display: grid;
+  gap: var(--sp-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* The remove button sits outside the fields rather than among them, so it
+   keeps its place when the fields below reflow into a column. */
+.item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: var(--sp-3);
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--sp-3);
+  min-width: 0;
+}
+
+.foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+}
+
+.standing {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+
+/* Narrow enough that four fields across would be four unreadable ones. */
+@container editor-form (max-width: 430px) {
+  .fields { grid-template-columns: minmax(0, 1fr); }
+}

@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <!-- TooBee Invoice Creator.
+       The Calender Maker's sheet, made into an invoice: same paper, same
+       square corners, same hairline edge, same bee-gold header band, same bee
+       in front. What changed is what is printed on the page — two item rows
+       with their amounts ruled off to the right, and a total struck under a
+       double rule with the figure set in gold.
+
+       The binder tabs are gone with the calendar they belonged to. An invoice
+       is a loose sheet that goes in an envelope, not a leaf in a planner. -->
+  <defs>
+    <clipPath id="body"><ellipse cx="0" cy="0" rx="31" ry="22"/></clipPath>
+  </defs>
+
+  <!-- the sheet -->
+  <rect x="26" y="42" width="204" height="190" fill="#F7F6F2"/>
+  <rect x="26" y="42" width="204" height="40"  fill="#F5B301"/>
+  <rect x="26.5" y="42.5" width="203" height="189" fill="none" stroke="#1B1E25" stroke-width="5"/>
+  <line x1="26" y1="82" x2="230" y2="82" stroke="#1B1E25" stroke-width="5"/>
+
+  <!-- the line items, ruled off to the right: description on the left, the
+       amount in its own column. Partly behind the bee, which is the point. -->
+  <g stroke-linecap="round">
+    <g stroke="#B9BCC4" stroke-width="5">
+      <line x1="48" y1="102" x2="132" y2="102"/>
+      <line x1="48" y1="124" x2="116" y2="124"/>
+    </g>
+    <g stroke="#6E7280" stroke-width="5">
+      <line x1="170" y1="102" x2="208" y2="102"/>
+      <line x1="178" y1="124" x2="208" y2="124"/>
+    </g>
+  </g>
+
+  <!-- the total: a double rule over the amount column, the figure in gold -->
+  <line x1="150" y1="186" x2="208" y2="186" stroke="#1B1E25" stroke-width="3"/>
+  <g stroke-linecap="round">
+    <line x1="48"  y1="202" x2="112" y2="202" stroke="#1B1E25" stroke-width="7"/>
+    <line x1="156" y1="202" x2="208" y2="202" stroke="#C98D00" stroke-width="9"/>
+  </g>
+
+  <!-- the bee -->
+  <g transform="translate(128 148) rotate(-12)">
+    <!-- wings -->
+    <g fill="#FFFFFF" fill-opacity="0.92" stroke="#1B1E25" stroke-width="4.5">
+      <ellipse cx="-4"  cy="-30" rx="20" ry="12" transform="rotate(-24 -4 -30)"/>
+      <ellipse cx="22"  cy="-26" rx="17" ry="10" transform="rotate(-8 22 -26)"/>
+    </g>
+    <!-- stinger -->
+    <path d="M30 -7 L48 0 L30 7 Z" fill="#1B1E25"/>
+    <!-- abdomen -->
+    <ellipse cx="0" cy="0" rx="31" ry="22" fill="#1B1E25"/>
+    <g clip-path="url(#body)" fill="#F5B301">
+      <rect x="-6"  y="-24" width="13" height="48"/>
+      <rect x="15"  y="-24" width="12" height="48"/>
+    </g>
+    <!-- head -->
+    <circle cx="-31" cy="-3" r="13" fill="#1B1E25"/>
+  </g>
+</svg>

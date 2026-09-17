@@ -1,0 +1,121 @@
+/* The floor every component stands on.
+
+   Deliberately short: anything that belongs to a component belongs in that
+   component's own stylesheet. What is here is what no single component can
+   own — the reset, the focus ring, and the scrollbars, which have to match
+   across the whole window or the app looks assembled from parts. */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+/* The window is a frame, not a page.
+
+   Nothing may scroll the window itself: every scrolling region in this app is
+   a pane inside the layout that knows its own bounds. Without this, anything
+   that overflows by a pixel takes the whole interface with it and leaves a
+   band of empty ground under the app — the rail scrolls away and the sheet
+   goes with it. */
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-ui);
+  font-size: var(--text-md);
+  line-height: 1.45;
+  color: var(--ink);
+  background: var(--ground);
+  -webkit-font-smoothing: antialiased;
+  /* A desktop app is not a web page: dragging the window contents around is
+     never what someone meant to do. */
+  overscroll-behavior: none;
+}
+
+h1, h2, h3, h4, p, figure, ul, ol, dl, dd { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+
+/* A collapsed section sets `hidden`, and several of them are display:grid —
+   which outranks the browser's own [hidden] rule and would leave the section
+   open. Settled once, for the whole app. */
+[hidden] { display: none !important; }
+
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button { cursor: pointer; }
+
+/* One focus ring, everywhere, and it is never removed — only replaced by a
+   clearer one where a component needs it. */
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+
+/* Scrollbars, sized for a dense tool rather than a document. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-track { background: transparent; }
+
+*::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border: 3px solid transparent;
+  background-clip: content-box;
+  border-radius: 6px;
+}
+
+*::-webkit-scrollbar-thumb:hover { background-color: var(--ink-3); background-clip: content-box; }
+
+/* Figures. Money lines up in a column only if every digit is the same width,
+   and that is as true in the app as it is on the invoice. */
+.figure {
+  font-family: var(--font-figure);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* Said to a screen reader, not shown.
+
+   Deliberately NOT position: absolute. The usual recipe is, but an
+   absolutely positioned element whose ancestors are all static resolves its
+   containing block to the body — which means a scrolling pane in between
+   does not clip it. One of these sitting deep inside a long scrolled form
+   then reports its position in document coordinates, and the document
+   stretches to reach it: a form 3,000px long gave the window a 1,150px tail
+   of empty ground below the interface.
+
+   Left in flow instead, as a 1px box with a negative margin: it takes no
+   space, is clipped by the same panes as everything else, and is still read
+   aloud.
+
+   `display: inline-block` is load-bearing. On an inline box — which a <span>
+   is by default — width, height and overflow are all ignored, so the text
+   would keep its natural width and push the layout sideways while being
+   invisible. Hiding it is not the same as it taking no room. */
+.sr-only {
+  display: inline-block;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  border: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  vertical-align: top;
+}

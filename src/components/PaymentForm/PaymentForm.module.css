@@ -1,0 +1,19 @@
+.form {
+  display: grid;
+  gap: var(--sp-4);
+  min-width: 0;
+}
+
+/* Fields wrap to whatever fits rather than being pinned to a column count:
+   this block is filled in differently in every country, and auto-fit already
+   answers to the width it is given rather than the window's. */
+.row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: var(--sp-4);
+}
+
+/* An IBAN needs a field it can be read in, so below this they go one up. */
+@container editor-form (max-width: 430px) {
+  .row { grid-template-columns: minmax(0, 1fr); }
+}

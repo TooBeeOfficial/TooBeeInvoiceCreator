@@ -1,0 +1,88 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--ink);
+  font-size: var(--text-md);
+  font-weight: 500;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background var(--duration) var(--ease), border-color var(--duration) var(--ease), color var(--duration) var(--ease);
+}
+
+.button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.label { display: block; }
+
+.block { width: 100%; }
+
+/* sizes — the small one is still 28px tall, which is as short as a control
+   can get and stay comfortably clickable with a mouse */
+.sm {
+  min-height: 28px;
+  padding: 0 var(--sp-3);
+  font-size: var(--text-sm);
+}
+
+.md {
+  min-height: 32px;
+  padding: 0 var(--sp-4);
+}
+
+/* primary — one per view */
+.primary {
+  background: var(--accent);
+  border-color: var(--accent-ink);
+  color: var(--accent-ink-on);
+}
+
+.primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.primary:active:not(:disabled) { transform: translateY(0.5px); }
+
+/* quiet — the ordinary button */
+.quiet {
+  background: var(--surface);
+  border-color: var(--line-strong);
+  color: var(--ink);
+}
+
+.quiet:hover:not(:disabled) {
+  background: var(--surface-3);
+  border-color: var(--line-strong);
+}
+
+.quiet:active:not(:disabled) { transform: translateY(0.5px); }
+
+/* ghost — for toolbars, where a row of boxes would be noise */
+.ghost {
+  background: transparent;
+  color: var(--ink-2);
+}
+
+.ghost:hover:not(:disabled) {
+  background: var(--surface-3);
+  color: var(--ink);
+}
+
+/* danger — only for actions that take something away */
+.danger {
+  background: transparent;
+  border-color: var(--line-strong);
+  color: var(--danger);
+}
+
+.danger:hover:not(:disabled) {
+  background: var(--danger-soft);
+  border-color: var(--danger);
+}

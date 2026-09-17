@@ -1,0 +1,127 @@
+.scroller {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+
+.table {
+  width: 100%;
+  min-width: 860px;
+  border-collapse: collapse;
+}
+
+.table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: var(--sp-3) var(--sp-3);
+  border-bottom: 1px solid var(--line-strong);
+  background: var(--surface);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--ink-3);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.sort {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-transform: inherit;
+  letter-spacing: inherit;
+}
+
+.sort:hover { color: var(--ink); }
+
+.row {
+  border-bottom: 1px solid var(--line);
+  /* The status spine. Same device as the summary tiles above. */
+  box-shadow: inset 3px 0 0 var(--tone);
+}
+
+.row:last-child { border-bottom: 0; }
+
+.row:hover { background: var(--surface-2); }
+
+.row > td {
+  padding: var(--sp-3);
+  vertical-align: middle;
+}
+
+.draft { --tone: var(--st-draft); }
+.sent { --tone: var(--st-sent); }
+.paid { --tone: var(--st-paid); }
+.overdue { --tone: var(--st-overdue); }
+.void { --tone: var(--st-void); }
+
+.missing { --tone: var(--line-strong); }
+.missing .client,
+.missing .colDate,
+.missing .colDue { opacity: 0.55; }
+
+.colNumber { width: 170px; }
+.colClient { min-width: 180px; }
+.colDate { width: 120px; white-space: nowrap; color: var(--ink-2); }
+.colDue { width: 150px; white-space: nowrap; }
+.colStatus { width: 110px; }
+.colAmount { width: 130px; text-align: right; font-weight: 600; }
+.colActions { width: 150px; }
+
+.open {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-figure);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--text-md);
+  font-weight: 600;
+  text-align: left;
+}
+
+.open:hover:not(:disabled) { color: var(--accent-ink); text-decoration: underline; }
+.open:disabled { cursor: not-allowed; color: var(--ink-3); }
+
+.gone {
+  display: block;
+  font-size: var(--text-xs);
+  color: var(--danger);
+}
+
+.client,
+.colDue > span:first-child {
+  display: block;
+  color: var(--ink);
+}
+
+.lines,
+.phrase {
+  display: block;
+  font-size: var(--text-xs);
+  color: var(--ink-3);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--sp-1);
+  opacity: 0;
+  transition: opacity var(--duration) var(--ease);
+}
+
+.row:hover .actions,
+.row:focus-within .actions { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .actions { transition: none; }
+}

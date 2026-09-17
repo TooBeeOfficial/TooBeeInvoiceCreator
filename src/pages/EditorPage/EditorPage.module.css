@@ -1,0 +1,79 @@
+.page {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+}
+
+/* The column is a fixed frame: the form scrolls inside it and the totals bar
+   is pinned under that. `overflow: hidden` is what holds the frame — without
+   it a tall form stretches the column and takes the totals bar off the
+   bottom of the window with it.
+
+   Its width comes from the splitter beside it, so nothing here fixes one.
+
+   It is also a query container in its own right: the totals bar is a sibling
+   of the scrolling area rather than a child of it, so it cannot ask
+   `editor-form` and asks `editor-pane` instead. */
+.form {
+  container-type: inline-size;
+  container-name: editor-pane;
+
+  display: flex;
+  flex-direction: column;
+  flex: none;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--surface-2);
+}
+
+/* The form column is a query container.
+
+   Since the splitter made this column resizable, the forms inside it have to
+   answer to how wide the column is, not how wide the window is — a window can
+   be 2,000px across while this column is dragged down to 420. A media query
+   measures the wrong thing entirely and would leave three-column rows crushed
+   on a wide screen. Everything inside asks `@container editor-form` instead.
+
+   The container's own size is its content box, so the breakpoints downstream
+   are the room the panels actually have, padding already taken off. */
+.scroll {
+  container-type: inline-size;
+  container-name: editor-form;
+
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  display: grid;
+  gap: var(--sp-4);
+  align-content: start;
+  padding: var(--sp-5) var(--sp-6) var(--sp-6);
+}
+
+/* Below this the gutters are eating room the fields need. */
+@container editor-form (max-width: 430px) {
+  .scroll { padding-left: var(--sp-4); padding-right: var(--sp-4); }
+}
+
+.rowActions {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+}
+
+.preview {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* Below this the sheet has no room to be useful next to the form, so the
+   form takes the window and the dividers have nothing left to divide. */
+@media (max-width: 1100px) {
+  .form {
+    width: auto !important;
+    flex: 1 1 auto;
+  }
+
+  .preview { display: none; }
+}

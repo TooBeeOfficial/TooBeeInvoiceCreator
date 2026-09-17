@@ -1,0 +1,54 @@
+.panel { display: block; }
+
+/* The native select, styled like the app's other controls. Native because a
+   list of a dozen layouts is exactly what the operating system's own menu is
+   good at: it is searchable by typing and it groups with <optgroup>. */
+.chooser {
+  composes: control from '../../../styles/control.module.css';
+  padding-right: var(--sp-3);
+  cursor: pointer;
+}
+
+.chooser option,
+.chooser optgroup {
+  background: var(--surface);
+  color: var(--ink);
+}
+
+/* What the chooser just selected: the name, whether it prints the full set
+   of fields, and one line on what it is for. */
+.chosen {
+  display: grid;
+  gap: 2px;
+  padding: var(--sp-3);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent-ink);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+}
+
+.chosenName {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-2);
+  font-size: var(--text-md);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.chosenTag {
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+
+.chosenBlurb {
+  font-size: var(--text-xs);
+  color: var(--ink-3);
+  line-height: 1.45;
+}
+

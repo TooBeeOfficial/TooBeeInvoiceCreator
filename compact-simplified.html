@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>INV-2026-0042</title>
+<style>
+@page { size: 210mm 297mm; margin: 12mm; }
+:root {
+  /* Type is drawn for A4; on a smaller sheet every size takes a larger share
+     of the paper, so type alone is scaled. Margins, rule weights and cell
+     padding are physical measurements of the printed page and are not. */
+  --type-scale: 1;
+  --page-w: 210mm;
+  --page-h: 297mm;
+  --content-h: 273mm;
+  --page-break-line: transparent;
+  --divider-paint: none;
+  /* The 1 is the slice: stretch the stripe along the edge instead of cutting
+     it into corners. */
+  --divider-image: none;
+  --divider-weight: max(var(--rule-strong-w), 0.4mm);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { margin: 0; padding: 0; background: var(--paper); }
+
+body { width: auto; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-body);
+  font-size: calc(var(--size-body) * var(--type-scale));
+  line-height: var(--line-height);
+  color: var(--ink);
+  background-color: var(--paper);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  text-rendering: geometricPrecision;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+h1, h2, h3, p, ul, ol, table, figure { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+img { max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+
+table { border-collapse: collapse; width: 100%; }
+
+/* Figures line up in a column of money only if every digit is the same
+   width; the rest of the page can stay proportional. */
+.num, td.num, th.num { font-family: var(--font-num); font-variant-numeric: tabular-nums lining-nums; }
+
+/* Pagination. A table header repeats on the second sheet, a row is never
+   split down the middle, and the totals never arrive on a page of their own
+   without at least some of what they total. */
+thead { display: table-header-group; }
+tfoot { display: table-footer-group; }
+tr { break-inside: avoid; page-break-inside: avoid; }
+.avoid-break { break-inside: avoid; page-break-inside: avoid; }
+.page-break { break-before: page; page-break-before: always; }
+
+/* Section dividers.
+
+   Templates mark the rules that separate one part of the sheet from another
+   with the brand-rule class, and say which edge the rule sits on with
+   rule-under or rule-over. The chosen style is painted into the border that
+   element already carries, so a template that marks nothing keeps its plain
+   rules and a divider set to plain paints nothing at all. */
+.brand-rule {
+  border-image: var(--divider-image);
+}
+
+/* A table drawn with collapsed borders throws border images away, so a rule
+   that lives on cells is painted as a stripe across the top or bottom of each
+   one instead. It lands in the same place and reads the same on paper. */
+
+
+
+
+/* The stamp a paid invoice carries. Set in the accent, turned off its axis,
+   and never in the way of a figure: it sits behind the totals block. */
+.paid-stamp {
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: rotate(-11deg);
+  border: calc(var(--rule-strong-w) * 2) solid var(--accent);
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: calc(var(--size-heading) * var(--type-scale) * 1.6);
+  padding: 1.5mm 4mm;
+  border-radius: var(--radius);
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+:root {
+  --paper: #FFFFFF;
+  --ink: #16191F;
+  --ink-soft: #6E7681;
+  --accent: #16191F;
+  --accent-ink: #FFFFFF;
+  --line: #DFE2E7;
+  --line-strong: #8E97A3;
+  --band-bg: #16191F;
+  --band-ink: #FFFFFF;
+  --zebra: #F6F7F9;
+  --font-display: 'Segoe UI Semibold', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Segoe UI', system-ui, sans-serif;
+  --font-num: Consolas, 'Courier New', monospace;
+  --size-title: 7mm;
+  --size-heading: 3.6mm;
+  --size-body: 3mm;
+  --size-small: 2.45mm;
+  --size-total: 5mm;
+  --weight-title: 700;
+  --weight-heading: 600;
+  --track-title: -0.005em;
+  --track-label: 0.14em;
+  --case-title: none;
+  --case-label: uppercase;
+  --line-height: 1.4;
+  --rule-w: 0.2mm;
+  --rule-strong-w: 0.45mm;
+  --radius: 0mm;
+  --cell-pad-x: 2mm;
+  --cell-pad-y: 1.8mm;
+  --page-margin: 12mm;
+  --block-gap: 6mm;
+  --head-gap: 6mm;
+  --table-gap: 5mm;
+  --logo-width: 24mm;
+}
+
+
+/* template: compact-simplified */
+.till {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 5mm;
+  padding-bottom: var(--cell-pad-y);
+  border-bottom: var(--rule-strong-w) solid var(--ink);
+}
+
+.logo {
+  display: block;
+  width: var(--logo-width);
+  height: auto;
+  margin-bottom: 2mm;
+}
+
+.house {
+  font-family: var(--font-display);
+  font-weight: var(--weight-title);
+  font-size: calc(var(--size-heading) * var(--type-scale) * 1.2);
+  letter-spacing: var(--track-title);
+}
+
+.house-lines {
+  color: var(--ink-soft);
+  font-size: calc(var(--size-small) * var(--type-scale));
+  line-height: 1.45;
+}
+
+.house-lines span + span::before {
+  content: '·';
+  margin: 0 1.2mm;
+  color: var(--line-strong);
+}
+
+.till-mark { text-align: right; flex: none; }
+
+.doctype {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  text-indent: 0.22em;
+  font-size: calc(var(--size-small) * var(--type-scale));
+  color: var(--accent);
+}
+
+.till-number {
+  font-family: var(--font-num);
+  font-size: calc(var(--size-heading) * var(--type-scale) * 1.1);
+  font-weight: var(--weight-title);
+  margin-top: 0.8mm;
+}
+
+.till-date {
+  color: var(--ink-soft);
+  font-size: calc(var(--size-small) * var(--type-scale));
+  margin-top: 0.4mm;
+}
+
+.cap {
+  font-family: var(--font-display);
+  text-transform: var(--case-label);
+  letter-spacing: var(--track-label);
+  font-size: calc(var(--size-small) * var(--type-scale));
+  color: var(--ink-soft);
+}
+
+/* --------------------------------------------------------------- buyer */
+
+.to {
+  display: block;
+  margin-top: var(--block-gap);
+  line-height: 1.45;
+}
+
+.to-name {
+  display: block;
+  font-weight: 600;
+  margin-top: 0.8mm;
+}
+
+.to-line {
+  display: block;
+  color: var(--ink-soft);
+  font-size: calc(var(--size-small) * var(--type-scale));
+}
+
+/* ---------------------------------------------------------------- tape */
+
+.tape {
+  margin-top: var(--table-gap);
+  border-top: var(--rule-w) solid var(--line);
+}
+
+.tape-line {
+  display: flex;
+  align-items: baseline;
+  gap: 1.5mm;
+  padding: var(--cell-pad-y) 0;
+  border-bottom: var(--rule-w) solid var(--line);
+}
+
+.tape-desc { flex: 0 1 auto; }
+
+.tape-details,
+.tape-qty {
+  display: block;
+  color: var(--ink-soft);
+  font-size: calc(var(--size-small) * var(--type-scale));
+  line-height: 1.4;
+}
+
+.tape-qty { margin-top: 0.4mm; }
+
+/* The dots. A repeating radial gradient rather than a row of typed
+   full stops, so the spacing holds at any width and any type size. */
+.leader {
+  flex: 1 1 auto;
+  align-self: flex-end;
+  height: calc(var(--size-body) * 0.9);
+  min-width: 6mm;
+  background-image: radial-gradient(circle, var(--line-strong) 0.25mm, transparent 0.25mm);
+  background-size: 1.6mm 1.6mm;
+  background-repeat: repeat-x;
+  background-position: left calc(100% - 0.9mm);
+}
+
+.tape-amount {
+  flex: none;
+  font-weight: 600;
+  font-family: var(--font-num);
+  min-width: 22mm;
+}
+
+/* ------------------------------------------------------------- totals */
+
+.sum { margin-top: var(--block-gap); }
+
+.sum-row {
+  display: flex;
+  align-items: baseline;
+  gap: 1.5mm;
+  padding: 0.7mm 0;
+  color: var(--ink-soft);
+}
+
+.sum-row .num { min-width: 22mm; text-align: right; color: var(--ink); }
+
+.sum-total {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4mm;
+  margin-top: 2mm;
+  padding: 2.2mm 0 0;
+  border-top: var(--rule-strong-w) solid var(--ink);
+}
+
+.sum-total-label {
+  font-family: var(--font-display);
+  text-transform: var(--case-label);
+  letter-spacing: var(--track-label);
+  font-size: calc(var(--size-small) * var(--type-scale));
+}
+
+.sum-total-value {
+  font-family: var(--font-display);
+  font-size: calc(var(--size-total) * var(--type-scale));
+  font-weight: var(--weight-title);
+  color: var(--accent);
+}
+
+.sum-note,
+.due-line {
+  margin-top: 1.4mm;
+  font-size: calc(var(--size-small) * var(--type-scale));
+  color: var(--ink-soft);
+}
+
+.due-line { margin-top: var(--cell-pad-y); }
+
+/* ------------------------------------------------------------ payment */
+
+.pay {
+  margin-top: var(--block-gap);
+  padding-top: var(--cell-pad-y);
+  border-top: var(--rule-w) solid var(--line);
+}
+
+.pay-text { margin-top: 1.2mm; line-height: 1.5; overflow-wrap: break-word; }
+
+.pay-rows {
+  margin-top: 1.2mm;
+  font-size: calc(var(--size-small) * var(--type-scale));
+  line-height: 1.55;
+}
+
+/* A narrow sheet and a long account number: the label holds its column and
+   the number wraps under itself rather than off the edge. */
+.pay-rows span {
+  display: flex;
+  gap: 2mm;
+  overflow-wrap: anywhere;
+}
+
+.pay-rows em {
+  flex: none;
+  width: 22mm;
+  font-style: normal;
+  color: var(--ink-soft);
+}
+
+.pay-link { margin-top: 1mm; color: var(--accent); word-break: break-all; }
+
+.foot-note {
+  margin-top: var(--block-gap);
+  font-size: calc(var(--size-small) * var(--type-scale));
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+.foot-terms {
+  margin-top: 2mm;
+  padding-top: 2mm;
+  border-top: var(--rule-w) solid var(--line);
+}
+
+</style>
+</head>
+<body>
+<header class="till brand-rule rule-under">
+  <div class="till-house">
+    
+    <p class="house">Harbourline Studio</p>
+    <p class="house-lines"><span>14 Wapping High Street</span><span>London E1W 2NA</span><span>United Kingdom</span></p>
+    <p class="house-lines"><span>VAT Number GB 428 9917 33</span></p>
+    <p class="house-lines"><span>accounts@harbourline.co</span></p>
+  </div>
+  <div class="till-mark">
+    <p class="doctype">Receipt</p>
+    <p class="till-number num">INV-2026-0042</p>
+    <p class="till-date">16 September 2026</p>
+  </div>
+</header>
+
+<section class="to avoid-break">
+  <span class="cap">Bill to</span>
+  <span class="to-name">Meridian Coffee Roasters Ltd</span>
+  
+  
+</section>
+
+<ul class="tape">
+  <li class="tape-line">
+    <span class="tape-desc">
+      Brand identity system
+      <span class="tape-details">Wordmark, palette and a 24-page guide</span>
+      <span class="tape-qty num">1 item × 4,800.00</span>
+    </span>
+    <span class="leader"></span>
+    <span class="tape-amount num">4,800.00</span>
+  </li>
+  <li class="tape-line">
+    <span class="tape-desc">
+      Packaging artwork
+      
+      <span class="tape-qty num">6 item × 320.00</span>
+    </span>
+    <span class="leader"></span>
+    <span class="tape-amount num">1,920.00</span>
+  </li>
+  <li class="tape-line">
+    <span class="tape-desc">
+      Studio time
+      <span class="tape-details">Photography direction, two days on site</span>
+      <span class="tape-qty num">14 hour × 95.00</span>
+    </span>
+    <span class="leader"></span>
+    <span class="tape-amount num">1,330.00</span>
+  </li>
+</ul>
+
+<section class="sum avoid-break">
+  <p class="sum-row"><span>Subtotal</span><span class="leader"></span><span class="num">£8,050.00</span></p>
+  <p class="sum-row"><span>VAT 20%</span><span class="leader"></span><span class="num">£1,610.00</span></p>
+  <p class="sum-total brand-rule rule-over">
+    
+    <span class="sum-total-label">Amount due</span>
+    <span class="sum-total-value num">£9,660.00</span>
+  </p>
+  
+</section>
+
+<p class="due-line"><span class="cap">Due</span> <span class="num">16 October 2026</span> · Net 30</p>
+
+<section class="pay avoid-break">
+  <p class="cap">How to pay</p>
+  
+  <p class="pay-rows"><span><em>Bank</em> Starling Bank</span><span><em>Account name</em> Harbourline Studio Ltd</span><span><em>IBAN</em> GB29 SRLG 6083 9912 3456 78</span><span><em>BIC &#x2F; SWIFT</em> SRLGGB2L</span><span><em>Payment reference</em> INV-2026-0042</span></p>
+  
+</section>
+
+<p class="foot-note">Thanks — it was a pleasure working on this.<br>Phase three starts in April.</p>
+
+
+</body>
+</html>

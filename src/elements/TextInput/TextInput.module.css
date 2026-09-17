@@ -1,0 +1,11 @@
+/* The shared control body, composed rather than copied. A relative path:
+   `composes` is resolved by the CSS pipeline, which does not read the
+   bundler's module aliases. */
+
+.input {
+  composes: control from '../../styles/control.module.css';
+}
+
+.figure {
+  composes: figure from '../../styles/control.module.css';
+}

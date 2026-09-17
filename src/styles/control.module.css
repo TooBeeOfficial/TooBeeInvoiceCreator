@@ -1,0 +1,55 @@
+/* The shared body of every text-entry control.
+
+   Composed into each input rather than copied, so a text field, a number
+   field and a date field are the same height and the same weight of border —
+   which is what makes a form of them look like one thing rather than five
+   controls that happen to be near each other. */
+
+.control {
+  width: 100%;
+  min-height: 30px;
+  padding: 0 var(--sp-3);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: var(--text-md);
+  transition: border-color var(--duration) var(--ease), background var(--duration) var(--ease);
+}
+
+.control::placeholder {
+  color: var(--ink-3);
+  /* A placeholder is an example, never the label. Set lighter so it is
+     never mistaken for something already typed. */
+  opacity: 1;
+}
+
+.control:hover:not(:disabled):not(:read-only) { border-color: var(--ink-3); }
+
+.control:focus {
+  outline: none;
+  border-color: var(--focus);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--focus) 26%, transparent);
+}
+
+.control:disabled {
+  background: var(--surface-2);
+  color: var(--ink-3);
+  cursor: not-allowed;
+}
+
+.control[aria-invalid='true'] {
+  border-color: var(--danger);
+}
+
+.control[aria-invalid='true']:focus {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--danger) 26%, transparent);
+}
+
+/* Figures line up when they are the same width, which matters in a column
+   of money and not at all in a name. */
+.figure {
+  font-family: var(--font-figure);
+  font-variant-numeric: tabular-nums lining-nums;
+  text-align: right;
+}

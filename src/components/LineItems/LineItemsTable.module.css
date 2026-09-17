@@ -1,0 +1,167 @@
+.wrap {
+  display: grid;
+  gap: var(--sp-3);
+  min-width: 0;
+}
+
+/* The column switches sit above the thing they change, not in a settings
+   panel three clicks away. */
+.columns {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+
+.columnsLabel {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-3);
+  margin-right: var(--sp-1);
+}
+
+.toggle {
+  padding: 2px var(--sp-3);
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-2);
+  font-size: var(--text-xs);
+  transition: background var(--duration) var(--ease), color var(--duration) var(--ease), border-color var(--duration) var(--ease);
+}
+
+.toggle:hover:not(:disabled) {
+  background: var(--surface-3);
+  color: var(--ink);
+}
+
+.toggle:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.on {
+  background: var(--accent-soft);
+  border-color: var(--accent-ink);
+  color: var(--accent-ink);
+}
+
+/* When every optional column is switched on the table needs more room than
+   the editor column has. It scrolls sideways from here rather than shrinking
+   its own fields — the minimum width is set in LineItemsTable.tsx from the
+   columns actually showing. */
+.scroller {
+  overflow-x: auto;
+  margin: 0 calc(var(--sp-1) * -1);
+  padding: 0 var(--sp-1) var(--sp-1);
+}
+
+/* Fixed layout is what makes the declared widths binding: with `auto` the
+   browser renegotiates them against the content and squeezes the narrow
+   ones.
+
+   Separate borders, not collapsed: each line is drawn as its own bordered
+   box, and collapsing would merge the bottom of one into the top of the
+   next. The row spacing is the gap between those boxes. */
+.table {
+  width: 100%;
+  /* Set from the component, from the columns actually showing. A custom
+     property rather than an inline min-width, so the container query below
+     can stand it down — an inline style could not be overridden. */
+  min-width: var(--items-min-width, 0);
+  border-collapse: separate;
+  border-spacing: 0 var(--sp-2);
+  table-layout: fixed;
+}
+
+.table thead th {
+  padding: 0 var(--sp-1) var(--sp-2);
+  border-bottom: 1px solid var(--line-strong);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Matches the padding the outer cells of a row gained when they took on a
+   border, so every heading still sits over its own column. */
+.table thead th:first-child { padding-left: var(--sp-2); }
+.table thead th:last-child { padding-right: var(--sp-2); }
+
+/* Mirrors LineItemRow.module.css — change both together. */
+.thNumber { width: 24px; text-align: right !important; }
+.thDescription { width: auto; }
+.thQty { width: 68px; text-align: right !important; }
+.thUnit { width: 92px; }
+.thPrice { width: 96px; text-align: right !important; }
+.thDiscount { width: 92px; text-align: right !important; }
+.thTax { width: 84px; text-align: right !important; }
+.thAmount { width: 96px; text-align: right !important; }
+.thMenu { width: 88px; }
+
+.foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  padding-top: var(--sp-1);
+}
+
+.footActions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+
+.runningTotal {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-3);
+  margin-left: auto;
+  font-size: var(--text-md);
+  color: var(--ink);
+}
+
+.runningLabel {
+  font-size: var(--text-sm);
+  color: var(--ink-3);
+}
+
+/* 620px is the table's own minimum for the columns an invoice shows by
+   default — description, quantity, unit price, amount and the row's three
+   commands — plus a little headroom. Below it there is no width at which
+   those are readable,
+   so the table stops being one. Each line becomes a small stacked card: the
+   description across the top, the figures beneath it in pairs, the amount on
+   a rule of its own.
+
+   The markup does not change — it is still a table, still one row per line,
+   still read as a table by a screen reader. Only the boxes change, which is
+   why the column headers are hidden and each cell names itself instead. */
+@container editor-form (max-width: 620px) {
+  .scroller { overflow-x: visible; }
+
+  .table {
+    display: block;
+    min-width: 0;
+    /* Row spacing comes from the gap below instead: `border-spacing` means
+       nothing once the table's parts are blocks. */
+    border-spacing: 0;
+  }
+
+  .table thead { display: none; }
+
+  /* The gap between the cards. */
+  .table tbody {
+    display: grid;
+    gap: var(--sp-3);
+  }
+}

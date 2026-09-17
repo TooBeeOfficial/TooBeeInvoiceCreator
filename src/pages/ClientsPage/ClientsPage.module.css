@@ -1,0 +1,122 @@
+.page {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  background: var(--surface-2);
+}
+
+.inner {
+  display: grid;
+  gap: var(--sp-5);
+  align-content: start;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: var(--sp-6);
+}
+
+.head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--sp-5);
+}
+
+.title {
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  margin-top: 2px;
+  font-size: var(--text-md);
+  color: var(--ink-3);
+}
+
+/* The book on the left, the one being edited on the right. */
+.split {
+  display: grid;
+  grid-template-columns: minmax(280px, 380px) minmax(0, 1fr);
+  gap: var(--sp-5);
+  align-items: start;
+}
+
+.split:has(.list:only-child) { grid-template-columns: minmax(0, 1fr); }
+
+.cards {
+  display: grid;
+  gap: var(--sp-2);
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.card:hover { border-color: var(--line-strong); }
+
+.cardOn {
+  border-color: var(--accent-ink);
+  box-shadow: inset 3px 0 0 var(--accent-ink);
+}
+
+.cardMain {
+  display: grid;
+  gap: 1px;
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: var(--sp-1) 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+}
+
+.cardName {
+  font-size: var(--text-md);
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cardLines {
+  font-size: var(--text-xs);
+  color: var(--ink-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cardActions {
+  display: flex;
+  flex: none;
+  gap: var(--sp-1);
+  opacity: 0;
+  transition: opacity var(--duration) var(--ease);
+}
+
+.card:hover .cardActions,
+.card:focus-within .cardActions { opacity: 1; }
+
+.editor { position: sticky; top: var(--sp-5); }
+
+.editorActions {
+  display: flex;
+  gap: var(--sp-2);
+}
+
+@media (max-width: 1000px) {
+  .split { grid-template-columns: minmax(0, 1fr); }
+  .editor { position: static; }
+  .cardActions { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cardActions { transition: none; }
+}

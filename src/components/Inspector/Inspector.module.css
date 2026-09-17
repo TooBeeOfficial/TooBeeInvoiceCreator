@@ -1,0 +1,71 @@
+/* The width is set by the splitter beside it. What stays here is the floor
+   it may not be dragged below and how it behaves in the row. */
+.inspector {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 260px;
+  flex: none;
+  border-left: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-2) var(--sp-2) var(--sp-3);
+  border-bottom: 1px solid var(--line);
+}
+
+.tabs {
+  display: flex;
+  gap: 2px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+  padding: var(--sp-1) var(--sp-2);
+  border: 0;
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--ink-3);
+  font-size: var(--text-sm);
+  white-space: nowrap;
+  transition: background var(--duration) var(--ease), color var(--duration) var(--ease);
+}
+
+.tab:hover {
+  background: var(--surface-3);
+  color: var(--ink);
+}
+
+.tabOn,
+.tabOn:hover {
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  font-weight: 600;
+}
+
+.body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+}
+
+/* Narrow enough and the tab labels give way to their icons rather than
+   wrapping onto a second row. */
+@media (max-width: 1280px) {
+  .tab span { display: none; }
+  .tab { padding: var(--sp-2); }
+}
+
+.loading {
+  padding: var(--sp-5);
+  font-size: var(--text-sm);
+  color: var(--ink-3);
+}

@@ -1,0 +1,103 @@
+.form {
+  display: grid;
+  gap: var(--sp-4);
+  min-width: 0;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--sp-4);
+}
+
+/* The address is one block, laid out as an address is written: the street
+   runs the full width, the town and post code share a line. */
+.address {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--sp-4);
+  padding: var(--sp-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+}
+
+.wide { grid-column: 1 / -1; }
+
+.ids {
+  display: grid;
+  gap: var(--sp-3);
+}
+
+.idsHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+}
+
+.idsLabel {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--ink-2);
+}
+
+.idsHint {
+  font-size: var(--text-xs);
+  color: var(--ink-3);
+  line-height: 1.5;
+  max-width: 62ch;
+}
+
+.idList {
+  display: grid;
+  gap: var(--sp-2);
+}
+
+.idRow {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.idLabel { color: var(--ink-2); }
+
+/* A field with a control on the end of it. The field takes the room and the
+   button takes what it needs, so the input still lines up with the one
+   beside it rather than being shortened by however wide the icon is. */
+.withAction {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  min-width: 0;
+}
+
+.withAction > :first-child { flex: 1 1 auto; min-width: 0; }
+
+@container editor-form (max-width: 430px) {
+  .row,
+  .address { grid-template-columns: minmax(0, 1fr); }
+
+  /* Label, number and the button that removes it stop fitting on one line,
+     so the two fields stack — and stacked they have to be exactly the same
+     width, or the pair reads as two unrelated fields rather than one
+     registration. Every child is placed by hand: left to auto-placement the
+     remove button steals a column from one field and not the other, which is
+     what makes one of them come up short. */
+  .idRow {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  /* the label */
+  .idRow > :nth-child(1) { grid-area: 1 / 1 / 2 / 2; }
+
+  /* the number under it, the same width */
+  .idRow > :nth-child(2) { grid-area: 2 / 1 / 3 / 2; }
+
+  /* and the remove button beside both, centred on the pair it removes */
+  .idRow > :nth-child(3) {
+    grid-area: 1 / 2 / 3 / 3;
+    align-self: center;
+  }
+}

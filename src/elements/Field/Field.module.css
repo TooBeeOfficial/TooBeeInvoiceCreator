@@ -1,0 +1,67 @@
+.field {
+  display: grid;
+  gap: var(--sp-1);
+  min-width: 0;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  min-height: 16px;
+}
+
+/* Takes the row rather than being sized to its own text.
+
+   As a plain flex item the label was laid out at the width of the words
+   alone, which left the required asterisk with nowhere to go but a second
+   line — a red mark floating under the field name. Letting it grow into the
+   row it already occupies keeps the marker where it belongs, beside the
+   name. */
+.label {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+
+.required { color: var(--danger); }
+
+.adornment {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--text-xs);
+  color: var(--ink-3);
+}
+
+.control { min-width: 0; }
+
+.hint,
+.error {
+  font-size: var(--text-xs);
+  line-height: 1.4;
+}
+
+.hint { color: var(--ink-3); }
+
+.error { color: var(--danger); }
+
+/* Beside instead of above, for the dense rows in the inspector where a
+   stacked label would double the height of every control. */
+.inline {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.inline .top { min-height: 0; }
+
+.inline .hint,
+.inline .error {
+  grid-column: 1 / -1;
+}

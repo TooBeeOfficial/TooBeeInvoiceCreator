@@ -1,0 +1,80 @@
+.preview {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  background: var(--ground);
+}
+
+.surface {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  padding: var(--sp-6);
+  /* Room under the sheet for the zoom bar that floats over it. */
+  padding-bottom: 56px;
+}
+
+/* While the middle button is held. The closed hand is the whole of the
+   feedback that a drag is happening, and turning selection off stops the drag
+   from painting a blue streak across the grey on its way past. */
+.surface.panning {
+  cursor: grabbing;
+  user-select: none;
+}
+
+.stage {
+  display: flex;
+  justify-content: center;
+  min-width: min-content;
+}
+
+/* The zoom bar floats over the surface rather than taking a strip of its
+   own: the sheet is what this pane is for and should get all of it. */
+.zoombar {
+  position: absolute;
+  left: 50%;
+  bottom: var(--sp-4);
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+  padding: var(--sp-1) var(--sp-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.percent {
+  min-width: 46px;
+  height: 26px;
+  padding: 0 var(--sp-2);
+  border: 0;
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--ink-2);
+  font-family: var(--font-figure);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--text-sm);
+}
+
+.percent:hover {
+  background: var(--surface-3);
+  color: var(--ink);
+}
+
+.divider {
+  width: 1px;
+  height: 18px;
+  margin: 0 var(--sp-1);
+  background: var(--line);
+}
+
+.paper {
+  padding: 0 var(--sp-3) 0 var(--sp-2);
+  font-size: var(--text-xs);
+  color: var(--ink-3);
+  white-space: nowrap;
+}

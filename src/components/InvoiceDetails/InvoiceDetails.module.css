@@ -1,0 +1,35 @@
+.form {
+  display: grid;
+  gap: var(--sp-4);
+  min-width: 0;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--sp-4);
+}
+
+.wide { grid-column: span 2; }
+
+/* The number is the invoice's name. It gets the tabular face so a column of
+   them lines up, and a little more weight than the fields around it. */
+.form .number {
+  font-weight: 600;
+  text-align: left;
+}
+
+.detail { width: 100%; }
+
+/* Three across while there is room, two when there is not, one when the
+   column has been pulled right in. Measured against the form column, not
+   the window — see EditorPage.module.css. */
+@container editor-form (max-width: 640px) {
+  .row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .wide { grid-column: 1 / -1; }
+}
+
+@container editor-form (max-width: 430px) {
+  .row { grid-template-columns: minmax(0, 1fr); }
+  .wide { grid-column: auto; }
+}

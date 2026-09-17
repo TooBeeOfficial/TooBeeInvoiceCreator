@@ -1,0 +1,62 @@
+{
+  "name": "invoice-creator",
+  "productName": "TooBee Invoice Creator",
+  "version": "1.0.0",
+  "description": "Write, design and export invoices — PDF, XLSX and CSV.",
+  "main": "electron/main.cjs",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -k -n VITE,APP -c cyan,magenta \"vite\" \"wait-on tcp:5173 && cross-env NODE_ENV=development node scripts/start.cjs\"",
+    "dev:web": "vite",
+    "build": "tsc --noEmit && vite build",
+    "build:fast": "vite build",
+    "typecheck": "tsc --noEmit",
+    "start": "vite build && cross-env NODE_ENV=production node scripts/start.cjs",
+    "dist": "vite build && electron-builder --win",
+    "icon": "node scripts/make-icon.cjs"
+  },
+  "dependencies": {
+    "exceljs": "^4.4.0",
+    "mustache": "^4.2.0",
+    "qrcode-generator": "2.0.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "zustand": "^4.5.5"
+  },
+  "devDependencies": {
+    "@codemirror/lang-css": "^6.3.0",
+    "@codemirror/lang-html": "^6.4.9",
+    "@types/mustache": "^4.2.5",
+    "@types/node": "^22.9.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@uiw/react-codemirror": "^4.23.6",
+    "@vitejs/plugin-react": "^4.3.3",
+    "concurrently": "^9.0.1",
+    "cross-env": "^7.0.3",
+    "electron": "^32.2.0",
+    "electron-builder": "^25.1.8",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10",
+    "wait-on": "^8.0.1"
+  },
+  "build": {
+    "appId": "com.rbt.invoicecreator",
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "build/icon.ico",
+      "publisherName": "TooBee"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}

@@ -1,0 +1,11 @@
+/* The inspector's rows are label-left, control-right, which is what the
+   Field element's inline mode does. Nothing else is needed here — the
+   controls carry their own styling. */
+
+.panel { display: block; }
+
+.palettes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--sp-2);
+}

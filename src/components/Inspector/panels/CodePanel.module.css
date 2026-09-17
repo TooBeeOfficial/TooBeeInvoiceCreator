@@ -1,0 +1,88 @@
+/* The code panel fills the inspector rather than scrolling inside it: an
+   editor you can only see six lines of is not an editor. */
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-3);
+  border-bottom: 1px solid var(--line);
+}
+
+.head > :first-child { flex: 1 1 auto; min-width: 0; }
+
+.note {
+  padding: var(--sp-3);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  color: var(--ink-3);
+  border-bottom: 1px solid var(--line);
+}
+
+.edited { color: var(--accent-ink); }
+
+.editor {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 240px;
+  overflow: hidden;
+  font-size: var(--text-sm);
+}
+
+/* The wrapper the React binding puts around the editor — cm-theme-dark or
+   cm-theme-light, depending on the app's theme. It carries no styles of its
+   own, so left alone it is a box of content height sitting between two that
+   were told to fill: the editor grows to however many lines the template
+   has, the rule above clips them, and the only overflow the wheel can find
+   is the sideways one. Matched by position rather than by name, because the
+   name is the binding's to change. */
+.editor > * {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* CodeMirror draws its own surface; these bring it into the app's type and
+   let it fill the space it was given.
+
+   Filled by flex rather than by height: 100%, which only resolves while
+   every box above it has a height a percentage can be taken of — and this
+   one sits at the end of a chain of flex items five deep. */
+.editor :global(.cm-editor) {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100%;
+  font-family: var(--font-mono);
+}
+
+/* The scroll.
+
+   CodeMirror does not scroll vertically on its own: given an editor of a
+   fixed height it will happily draw a thousand lines straight out of the
+   bottom of it, and the wrapper above clips them. The scroller is the
+   element meant to hold the overflow, and this is the line that tells it to
+   — without it the code panel shows exactly as many lines as it has room
+   for and no way to reach the rest. */
+.editor :global(.cm-scroller) {
+  overflow: auto;
+  font-family: var(--font-mono);
+  line-height: 1.5;
+  /* Long lines are scrolled to, not wrapped: a wrapped selector or a wrapped
+     Mustache tag is one that no longer looks like what it is. The wheel
+     works down the file and shift with the wheel works across it, which is
+     what the browser does by itself once both axes can actually move. */
+  overscroll-behavior: contain;
+}
+
+.editor :global(.cm-editor.cm-focused) {
+  outline: none;
+}

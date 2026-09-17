@@ -1,0 +1,95 @@
+/* Pinned to the foot of the editor column. The rows scroll horizontally on a
+   narrow window rather than wrapping into a second line, because the amount
+   due must never be pushed out of view by its own arithmetic. */
+
+/* Pinned to the foot of the editor column and never able to move.
+
+   `flex: none` matters as much as the sticky does: as a flex item in a
+   column this bar would otherwise be allowed to shrink when the form above
+   it grows, and the whole point of it is that the total is on screen while
+   you are typing the lines that make it. */
+.ledger {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--sp-2) var(--sp-4);
+  min-height: var(--ledger-h);
+  padding: var(--sp-2) var(--sp-6);
+  border-top: 1px solid var(--line-strong);
+  background: var(--surface);
+  box-shadow: 0 -4px 14px -10px rgba(20, 24, 31, 0.5);
+}
+
+/* The rows wrap onto a second line rather than scrolling sideways. A figure
+   you have to scroll to reach is a figure you cannot see, which defeats the
+   bar — so on a narrow window the bar gets taller instead. */
+.rows {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--sp-2) var(--sp-5);
+  min-width: 0;
+}
+
+.row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-2);
+  white-space: nowrap;
+}
+
+.label {
+  font-size: var(--text-xs);
+  color: var(--ink-3);
+}
+
+.value {
+  font-size: var(--text-sm);
+  color: var(--ink-2);
+}
+
+/* The one figure the document exists to state: given the accent, the largest
+   type in the bar, and a rule of its own to sit behind. */
+.grand {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-3);
+  flex: none;
+  margin-left: auto;
+  padding-left: var(--sp-5);
+  border-left: 1px solid var(--line);
+}
+
+.status { align-self: center; }
+
+.grandLabel {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--ink-3);
+}
+
+.grandValue {
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--accent-ink);
+}
+
+/* Pulled in once the pane is narrow. */
+@container editor-pane (max-width: 470px) {
+  .ledger { padding-left: var(--sp-4); padding-right: var(--sp-4); }
+
+  .grand {
+    margin-left: 0;
+    padding-left: 0;
+    border-left: 0;
+    width: 100%;
+    justify-content: space-between;
+  }
+}

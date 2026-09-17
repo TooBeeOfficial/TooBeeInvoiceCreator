@@ -1,0 +1,178 @@
+/* ============================================================
+   TooBee Invoice Creator — the same press console as the Calender Maker.
+   Slate body, hairline rules, process inks. Bee gold means "this does
+   something"; the status inks mean "this is where the money stands".
+   ============================================================ */
+
+/* Nothing here reaches the printed page — the invoice carries its own theme,
+   which travels inside the document. These are the colours of the tool you
+   work in, taken from the Calender Maker so that the two apps read as one
+   family: the same slate, the same gold, the same 2px corner.
+
+   The one rule worth stating: bee gold splits in two, because one gold
+   cannot do both jobs. On a slate panel it is about 9:1 and reads
+   beautifully; on white it is about 1.8:1 and disappears. `--accent` fills a
+   shape and carries `--accent-ink-on` as its ink. `--accent-ink` is the gold
+   used AS ink — text, a rule, an indicator — and it darkens in the light
+   theme so it still reads on a paper-white panel. Using the wrong one is the
+   single easiest way to make this palette unreadable. */
+
+:root {
+  color-scheme: dark;
+
+  /* ink */
+  --ink: #E9EBF0;
+  --ink-2: #A9B0BD;
+  /* The Calender Maker's ink-500 lifted from #767D8C. It is the same grey a
+     shade brighter: at #767D8C hint text sits at 4.04 against a panel, just
+     under the 4.5 a 12px caption needs, and hints are where this app does a
+     lot of its explaining. */
+  --ink-3: #838A98;
+  --ink-4: #767D8C;
+  --ink-on-accent: #15171C;
+
+  /* ground — void behind the sheet, press panels above it */
+  --void: #0E1014;
+  --ground: #0E1014;
+  --surface-2: #15171C;
+  --surface: #1B1E25;
+  --surface-3: #282D37;
+  --overlay: rgba(6, 8, 11, 0.66);
+
+  /* lines */
+  --line: #2C313B;
+  --line-soft: #22262E;
+  --line-strong: #3A404D;
+
+  /* bee gold */
+  --accent: #F5B301;
+  --accent-hot: #FFC526;
+  --accent-ink: #F5B301;
+  --accent-hover: #FFC526;
+  --accent-soft: #2A2410;
+  --accent-ink-on: #15171C;
+  --focus: #F5B301;
+
+  /* status — process inks, one meaning each, used nowhere decorative */
+  --st-draft: #8A92A1;
+  --st-draft-soft: #21252D;
+  --st-sent: #00A0DF;
+  --st-sent-soft: #102530;
+  --st-paid: #3DBE7A;
+  --st-paid-soft: #112A20;
+  /* The brand magenta reads at 3.78 on its own ground, which is fine for a
+     shape and not for the word beside it. The pill prints both, so the tint
+     that carries the word is the one stored. */
+  --st-overdue: #FF4E95;
+  --st-overdue-soft: #2E0F20;
+  --st-void: #555B68;
+  --st-void-soft: #1E2128;
+
+  /* meaning */
+  --danger: #FF4E95;
+  --danger-dim: #E5006D;
+  --danger-soft: #2E0F20;
+  --warning: #F0B400;
+  --warning-soft: #2A2410;
+
+  /* type */
+  --font-ui: 'Segoe UI Variable Text', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-figure: Bahnschrift, 'DIN Next', 'Segoe UI', sans-serif;
+  --font-mono: Consolas, 'Cascadia Mono', 'Courier New', monospace;
+
+  --text-xs: 11px;
+  --text-sm: 12px;
+  --text-md: 13px;
+  --text-lg: 15px;
+  --text-xl: 19px;
+  --text-2xl: 26px;
+
+  /* space — a dense scale, because this is a workbench and not a brochure */
+  --sp-1: 4px;
+  --sp-2: 6px;
+  --sp-3: 8px;
+  --sp-4: 12px;
+  --sp-5: 16px;
+  --sp-6: 20px;
+  --sp-7: 28px;
+  --sp-8: 40px;
+
+  /* The console is square. 2px is a cut edge, not a rounded one. */
+  --radius-sm: 2px;
+  --radius: 2px;
+  --radius-lg: 3px;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.6);
+  --shadow-sheet: 0 1px 3px rgba(0, 0, 0, 0.5), 0 12px 34px rgba(0, 0, 0, 0.55);
+
+  --rail-h: 44px;
+  --ledger-h: 52px;
+  --duration: 160ms;
+  --ease: cubic-bezier(0.2, 0, 0.1, 1);
+}
+
+/* ------------------------------------------------------------------ light
+
+   The same console in daylight. Only the chrome changes: the sheet is paper
+   and carries its own colours from the document's theme, so it looks the
+   same under either. The tokens are redefined rather than the rules
+   rewritten — every panel, rule and input already reads from these. */
+[data-theme='light'] {
+  color-scheme: light;
+
+  --ink: #14161B;
+  --ink-2: #3C4350;
+  --ink-3: #666D7B;
+  --ink-4: #8A91A0;
+  --ink-on-accent: #15171C;
+
+  --void: #DFE3EA;
+  --ground: #DFE3EA;
+  --surface-2: #EDEFF4;
+  --surface: #FFFFFF;
+  --surface-3: #E8EBF1;
+  --overlay: rgba(20, 22, 27, 0.42);
+
+  --line: #E1E5EC;
+  --line-soft: #EDEFF4;
+  --line-strong: #C9CFDA;
+
+  /* The fill stays gold; the ink darkens so it still reads on white. */
+  --accent: #F5B301;
+  --accent-hot: #FFC526;
+  --accent-ink: #8A6200;
+  --accent-hover: #E0A400;
+  --accent-soft: #FDF3DC;
+  --accent-ink-on: #15171C;
+  --focus: #8A6200;
+
+  --st-draft: #666D7B;
+  --st-draft-soft: #EDEFF4;
+  --st-sent: #00719E;
+  --st-sent-soft: #E1F1F8;
+  --st-paid: #1E7A4C;
+  --st-paid-soft: #E2F4EA;
+  --st-overdue: #B8005A;
+  --st-overdue-soft: #FCE6F0;
+  --st-void: #8A91A0;
+  --st-void-soft: #EDEFF4;
+
+  --danger: #B8005A;
+  --danger-dim: #8E0046;
+  --danger-soft: #FCE6F0;
+  --warning: #8A6200;
+  --warning-soft: #FDF3DC;
+
+  --shadow-sm: 0 1px 2px rgba(20, 22, 27, 0.08);
+  --shadow: 0 2px 8px rgba(20, 22, 27, 0.10);
+  --shadow-lg: 0 12px 32px rgba(20, 22, 27, 0.18);
+  --shadow-sheet: 0 1px 3px rgba(20, 22, 27, 0.16), 0 10px 30px rgba(20, 22, 27, 0.13);
+}
+
+/* Someone who has asked their system to stop moving things gets a still
+   interface, not a faster one. */
+@media (prefers-reduced-motion: reduce) {
+  :root { --duration: 0ms; }
+}

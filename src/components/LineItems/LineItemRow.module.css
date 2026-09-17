@@ -1,0 +1,193 @@
+/* Column widths live here and are mirrored by the header in
+   LineItemsTable.module.css and by the minimum width the table asks for.
+   They are deliberately tight: this table sits in a column beside a sheet of
+   paper, and a field that has been squeezed narrower than its own contents is
+   worse than one you have to scroll to. */
+
+/* Every line is drawn as its own box rather than as a band between two
+   hairlines. A row of fields with a rule under it is read as a grid; a row
+   of fields inside a border is read as one thing — which is what a line item
+   is, and what somebody scanning for the one they mistyped is looking for.
+   The table sets `border-collapse: separate` so these borders stay four
+   sides of one box instead of merging with the neighbours'. */
+.row > td {
+  padding: var(--sp-2) var(--sp-1);
+  vertical-align: top;
+  border-top: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line-strong);
+  background: var(--surface-2);
+}
+
+/* The line being worked on says so. Only the border changes: a row that
+   also changed colour under the pointer would flicker the whole block every
+   time the mouse crossed it. */
+.row:focus-within > td { border-color: var(--ink-4); }
+
+/* The ends of the box: only the outer cells carry a side. */
+.row > td:first-child {
+  padding-left: var(--sp-2);
+  border-left: 1px solid var(--line-strong);
+  border-top-left-radius: var(--radius);
+  border-bottom-left-radius: var(--radius);
+}
+
+.row > td:last-child {
+  padding-right: var(--sp-2);
+  border-right: 1px solid var(--line-strong);
+  border-top-right-radius: var(--radius);
+  border-bottom-right-radius: var(--radius);
+}
+
+.row > td.cellNumber {
+  width: 24px;
+  padding-top: 13px;
+  color: var(--ink-3);
+  font-family: var(--font-figure);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--text-sm);
+  text-align: right;
+}
+
+.cellDescription { min-width: 0; }
+
+/* The note under the description is quieter than the description, and only
+   looks like a field once it is being used — an empty second line on every
+   row would make the table twice as loud for nothing. */
+.row .details {
+  margin-top: var(--sp-1);
+  border-color: transparent;
+  background: transparent;
+  font-size: var(--text-sm);
+  color: var(--ink-2);
+}
+
+.row .details:hover,
+.row .details:focus {
+  border-color: var(--line-strong);
+  background: var(--surface);
+}
+
+.cellQty { width: 68px; }
+.cellUnit { width: 92px; }
+.cellPrice { width: 96px; }
+.cellDiscount { width: 92px; }
+.cellTax { width: 84px; }
+
+.row > td.cellAmount {
+  width: 96px;
+  padding-top: 13px;
+  text-align: right;
+  font-weight: 600;
+  font-size: var(--text-sm);
+  white-space: nowrap;
+}
+
+.row > td.cellMenu {
+  width: 88px;
+  padding-top: 9px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+}
+
+/* Quiet until the row is in use, but never out of the tab order and never
+   gone — a control that disappears is one people stop looking for. Keeping
+   and deleting a line sit at a readable weight rather than the menu's,
+   because they are the two things anyone comes to this corner for. */
+.rowButton {
+  opacity: 0.7;
+  transition: opacity var(--duration) var(--ease);
+}
+
+.row:hover .rowButton,
+.row:focus-within .rowButton,
+.rowButton:focus-visible { opacity: 1; }
+
+/* Written long enough to outrank the hover rule above: a line with nothing
+   typed in it yet has nothing worth saving, and the button should keep
+   saying so while the pointer is over the row. */
+.row .rowButton:disabled { opacity: 0.3; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rowButton { transition: none; }
+}
+
+/* The stacked form, for a form column too narrow to hold the table.
+   Mirrors the breakpoint in LineItemsTable.module.css. */
+@container editor-form (max-width: 620px) {
+  /* Stacked, each line has to be a box in its own right. In the table the
+     columns line up and the eye follows them across; here there are no
+     columns, so two items run into each other unless the whole of one is
+     drawn inside a border. The card carries it: the cells inside go back to
+     having no borders of their own. */
+  .row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--sp-2) var(--sp-3);
+    padding: var(--sp-4);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-lg);
+    background: var(--surface-2);
+  }
+
+  .row:focus-within { border-color: var(--ink-4); }
+
+  .row > td,
+  .row > td:first-child,
+  .row > td:last-child {
+    display: block;
+    width: auto;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+
+  /* Each figure says what it is, since the column headings are gone. */
+  .row > td[data-label]::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 2px;
+    font-size: var(--text-xs);
+    color: var(--ink-3);
+  }
+
+  .row > td.cellNumber {
+    grid-column: 1 / -1;
+    padding-top: 0;
+    text-align: left;
+  }
+
+  .cellDescription { grid-column: 1 / -1; }
+
+  /* Quieter than the rule between items, on purpose — this one only closes
+     off a line, it does not end one. */
+  .row > td.cellAmount {
+    grid-column: 1 / -1;
+    padding-top: var(--sp-2);
+    border-top: 1px dotted var(--line);
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    font-size: var(--text-md);
+  }
+
+  .row > td.cellAmount::before { margin-bottom: 0; }
+
+  /* The card's own footer: the line's commands sit under its total, where
+     there is room for all three at a size a thumb can hit. Parked in the top
+     corner they would eat a third of the description. */
+  .row > td.cellMenu {
+    grid-column: 1 / -1;
+    justify-self: end;
+  }
+
+  .actions { gap: var(--sp-1); }
+
+  /* Always visible here: there is no hover on a row somebody is filling in
+     with a thumb, and these are the only ways to keep or drop a line. */
+  .rowButton { opacity: 1; }
+}

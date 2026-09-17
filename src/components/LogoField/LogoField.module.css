@@ -1,0 +1,50 @@
+.logo {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-4);
+}
+
+/* A light square whatever the app theme is: a logo is artwork for paper and
+   has to be judged against paper. */
+.preview {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 92px;
+  height: 64px;
+  padding: var(--sp-2);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: #FFFFFF;
+  overflow: hidden;
+}
+
+.image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.placeholder {
+  font-size: var(--text-xs);
+  color: #8A929E;
+}
+
+.controls {
+  flex: 1 1 auto;
+  display: grid;
+  gap: var(--sp-3);
+  align-content: start;
+  min-width: 0;
+}
+
+.buttons {
+  display: flex;
+  gap: var(--sp-2);
+}
+
+.hint {
+  font-size: var(--text-xs);
+  color: var(--ink-3);
+  line-height: 1.5;
+}
