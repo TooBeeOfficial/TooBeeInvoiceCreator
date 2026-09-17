@@ -50,12 +50,6 @@
   color: var(--ink-2);
 }
 
-.previewNumber {
-  font-family: var(--font-figure);
-  font-variant-numeric: tabular-nums;
-  font-size: var(--text-lg);
-  color: var(--accent-ink);
-}
 
 @media (max-width: 760px) {
   .row { grid-template-columns: minmax(0, 1fr); }

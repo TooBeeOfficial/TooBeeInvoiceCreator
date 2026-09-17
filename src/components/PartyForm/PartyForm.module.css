@@ -42,13 +42,6 @@
   color: var(--ink-2);
 }
 
-.idsHint {
-  font-size: var(--text-xs);
-  color: var(--ink-3);
-  line-height: 1.5;
-  max-width: 62ch;
-}
-
 .idList {
   display: grid;
   gap: var(--sp-2);

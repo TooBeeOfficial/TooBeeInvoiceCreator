@@ -62,6 +62,3 @@ export function findTemplate (id: string): InvoiceTemplate | undefined {
 export function getTemplate (id: string): InvoiceTemplate {
   return findTemplate(id) ?? BUILTIN_TEMPLATES[0]
 }
-
-export const templatesFor = (detail: InvoiceTemplate['detail']): InvoiceTemplate[] =>
-  allTemplates().filter((t) => t.detail === detail)

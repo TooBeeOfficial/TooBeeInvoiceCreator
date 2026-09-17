@@ -53,8 +53,6 @@ interface DocState {
   /* history */
   undo: () => void
   redo: () => void
-  canUndo: () => boolean
-  canRedo: () => boolean
 
   /* document */
   setField: (field: 'title' | 'notes' | 'terms', value: string) => void
@@ -166,9 +164,6 @@ export const useDocStore = create<DocState>((set, get) => {
         lastKey: null,
       })
     },
-
-    canUndo: () => get().past.length > 0,
-    canRedo: () => get().future.length > 0,
 
     /* ------------------------------------------------------- document */
 

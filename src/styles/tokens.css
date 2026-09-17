@@ -29,10 +29,8 @@
      lot of its explaining. */
   --ink-3: #838A98;
   --ink-4: #767D8C;
-  --ink-on-accent: #15171C;
 
   /* ground — void behind the sheet, press panels above it */
-  --void: #0E1014;
   --ground: #0E1014;
   --surface-2: #15171C;
   --surface: #1B1E25;
@@ -41,12 +39,10 @@
 
   /* lines */
   --line: #2C313B;
-  --line-soft: #22262E;
   --line-strong: #3A404D;
 
   /* bee gold */
   --accent: #F5B301;
-  --accent-hot: #FFC526;
   --accent-ink: #F5B301;
   --accent-hover: #FFC526;
   --accent-soft: #2A2410;
@@ -70,7 +66,6 @@
 
   /* meaning */
   --danger: #FF4E95;
-  --danger-dim: #E5006D;
   --danger-soft: #2E0F20;
   --warning: #F0B400;
   --warning-soft: #2A2410;
@@ -126,9 +121,7 @@
   --ink-2: #3C4350;
   --ink-3: #666D7B;
   --ink-4: #8A91A0;
-  --ink-on-accent: #15171C;
 
-  --void: #DFE3EA;
   --ground: #DFE3EA;
   --surface-2: #EDEFF4;
   --surface: #FFFFFF;
@@ -136,12 +129,10 @@
   --overlay: rgba(20, 22, 27, 0.42);
 
   --line: #E1E5EC;
-  --line-soft: #EDEFF4;
   --line-strong: #C9CFDA;
 
   /* The fill stays gold; the ink darkens so it still reads on white. */
   --accent: #F5B301;
-  --accent-hot: #FFC526;
   --accent-ink: #8A6200;
   --accent-hover: #E0A400;
   --accent-soft: #FDF3DC;
@@ -160,7 +151,6 @@
   --st-void-soft: #EDEFF4;
 
   --danger: #B8005A;
-  --danger-dim: #8E0046;
   --danger-soft: #FCE6F0;
   --warning: #8A6200;
   --warning-soft: #FDF3DC;

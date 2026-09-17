@@ -32,12 +32,6 @@ export function nextNumber (scheme: NumberingScheme, year = new Date().getFullYe
   return formatNumber(scheme, rolled ? 1 : scheme.next, year)
 }
 
-/** The scheme after that number has been used. */
-export function advance (scheme: NumberingScheme, year = new Date().getFullYear()): NumberingScheme {
-  const rolled = scheme.resetYearly && year !== scheme.year
-  return { ...scheme, year, next: rolled ? 2 : scheme.next + 1 }
-}
-
 /* Whether a number is already on another invoice.
 
    Checked against the library index rather than the disk, so it catches the

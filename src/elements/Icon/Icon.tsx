@@ -21,11 +21,9 @@ const PATHS = {
   close: 'M6 6l12 12M18 6L6 18',
   chevronDown: 'M6 9l6 6 6-6',
   chevronUp: 'M6 15l6-6 6 6',
-  chevronLeft: 'M15 6l-6 6 6 6',
   chevronRight: 'M9 6l6 6-6 6',
   arrowUp: 'M12 19V5M6 11l6-6 6 6',
   arrowDown: 'M12 5v14M6 13l6 6 6-6',
-  arrowLeft: 'M19 12H5M11 6l-6 6 6 6',
   file: 'M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8zM14 3v5h5M9 13h6M9 17h4',
   folder: 'M4 7a2 2 0 0 1 2-2h3l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z',
   save: 'M5 5a2 2 0 0 1 2-2h9l4 4v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2zM8 3v6h7M8 14h8v6H8z',
@@ -53,10 +51,6 @@ const PATHS = {
      a dot the width of the stroke — 0.9px at the size this is drawn — which
      antialiases away to nothing next to icons made of full-length lines. */
   more: 'M6.6 12a.6.6 0 1 1-1.2 0 .6.6 0 1 1 1.2 0M12.6 12a.6.6 0 1 1-1.2 0 .6.6 0 1 1 1.2 0M18.6 12a.6.6 0 1 1-1.2 0 .6.6 0 1 1 1.2 0',
-  external: 'M14 4h6v6M20 4l-8 8M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5',
-  sun: 'M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10zM12 2v2M12 20v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M2 12h2M20 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4',
-  moon: 'M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z',
-  monitor: 'M4 5h16v11H4zM9 20h6M12 16v4',
   refresh: 'M20 12a8 8 0 1 1-2.3-5.7M20 4v5h-5',
   grip: 'M9.6 6a.6.6 0 1 1-1.2 0 .6.6 0 1 1 1.2 0M9.6 12a.6.6 0 1 1-1.2 0 .6.6 0 1 1 1.2 0M9.6 18a.6.6 0 1 1-1.2 0 .6.6 0 1 1 1.2 0M15.6 6a.6.6 0 1 1-1.2 0 .6.6 0 1 1 1.2 0M15.6 12a.6.6 0 1 1-1.2 0 .6.6 0 1 1 1.2 0M15.6 18a.6.6 0 1 1-1.2 0 .6.6 0 1 1 1.2 0',
   percent: 'M6 18 18 6M7.5 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM16.5 18a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z',

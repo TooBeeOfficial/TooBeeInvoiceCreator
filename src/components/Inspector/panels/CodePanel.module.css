@@ -26,8 +26,6 @@
   border-bottom: 1px solid var(--line);
 }
 
-.edited { color: var(--accent-ink); }
-
 .editor {
   display: flex;
   flex-direction: column;

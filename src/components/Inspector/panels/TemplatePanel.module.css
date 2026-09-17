@@ -37,6 +37,12 @@
   color: var(--ink);
 }
 
+.chosenMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
 .chosenTag {
   font-size: 10px;
   font-weight: 500;
@@ -51,4 +57,20 @@
   color: var(--ink-3);
   line-height: 1.45;
 }
+
+/* The name of a new template and the button that saves it, on one line —
+   mirrors the saved-styles save row in the Style tab. */
+.saveRow {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-top: var(--sp-2);
+}
+
+.saveRow > :first-child {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.saveRow > :last-child { flex: none; }
 

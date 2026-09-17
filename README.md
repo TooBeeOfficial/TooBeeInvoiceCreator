@@ -110,6 +110,7 @@ electron/          Main process and the preload bridge
   main.cjs         Windows, menus, IPC handlers, file dialogs
   preload.cjs      The only surface exposed to the renderer
 scripts/           Build and launch helpers
+samples/           Rendered reference output and an import fixture
 src/
   core/            Everything that is not React
     document/      View model and HTML rendering

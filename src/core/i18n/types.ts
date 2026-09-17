@@ -75,7 +75,6 @@ export interface DocumentLabels {
   detachSlip: string
   page: string
   of: string
-  continued: string
 }
 
 /* Words with a number in them carry a placeholder rather than being glued
@@ -193,7 +192,6 @@ export interface AppStrings {
     newInvoice: string
     search: string
     searchLabel: string
-    showingOnly: string
     /* The "no filter" option at the top of each picker. Written as what it
        shows rather than as the word "all", because the list under it is
        what the reader is choosing from. */
@@ -437,8 +435,6 @@ export interface AppStrings {
   }
   checks: {
     allClear: string
-    toFix: string
-    toCheck: string
     number: string
     numberDuplicate: string
     issueDate: string
@@ -459,7 +455,6 @@ export interface AppStrings {
     paymentAmount: string
     paymentDate: string
     paymentEarly: string
-    paymentsExceedTotal: string
     paidButVoid: string
   }
   ledger: {
@@ -490,6 +485,13 @@ export interface AppStrings {
     template: string
     builtIn: string
     savedByYou: string
+    saveAsTemplate: string
+    templateName: string
+    deleteTemplate: string
+    deleteTemplateTitle: string
+    deleteTemplateBody: string
+    templateSaved: string
+    templateDeleted: string
     paper: string
     size: string
     orientation: string
@@ -527,7 +529,6 @@ export interface AppStrings {
     labelCase: string
     caseNormal: string
     caseUpper: string
-    caseSmall: string
     spacing: string
     pageMargin: string
     underLetterhead: string
@@ -619,7 +620,6 @@ export interface AppStrings {
     newTitle: string
     note: string
     save: string
-    useOnInvoice: string
     needsName: string
     saved: string
     removeTitle: string
@@ -663,14 +663,9 @@ export interface AppStrings {
     choose: string
     chooseNote: string
     destination: string
-    toInvoice: string
-    toItems: string
     columns: string
-    columnsNote: string
-    ignore: string
     previewTitle: string
     rows: string
-    importCount: string
     skipped: string
     skippedOne: string
     nothingUsable: string
@@ -721,7 +716,6 @@ export interface AppStrings {
     discardTitle: string
     discardBody: string
     discardConfirm: string
-    settingsFailed: string
   }
 }
 

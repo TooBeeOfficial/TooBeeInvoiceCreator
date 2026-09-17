@@ -44,9 +44,6 @@ export const documentLabels = (locale: string | null | undefined): DocumentLabel
 export const appStrings = (language: string | null | undefined): AppStrings =>
   dictionaryFor(language).app
 
-export const hasTranslation = (locale: string | null | undefined): boolean =>
-  Object.prototype.hasOwnProperty.call(DICTIONARIES, languageOf(locale))
-
 export type { AppStrings, Dictionary, DocumentLabels } from './types'
 export { LOCALES, APP_LANGUAGES, DEFAULT_LOCALE, languageOf, localeOption } from './locales'
 export type { LocaleOption } from './locales'

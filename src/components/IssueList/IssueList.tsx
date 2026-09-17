@@ -9,7 +9,6 @@
    list can be worked down rather than read. */
 
 import type { Issue, ValidationResult } from '@core/validation/validateInvoice'
-import type { AppStrings } from '@core/i18n'
 import { Icon } from '@elements/Icon/Icon'
 import { useT } from '@hooks/useT'
 import styles from './IssueList.module.css'
@@ -41,12 +40,4 @@ export function IssueList ({ result, className }: IssueListProps) {
       ))}
     </div>
   )
-}
-
-/* A one-line version for a toolbar: "2 to fix · 1 to check". */
-export function issueSummary (result: ValidationResult, t: AppStrings): string | null {
-  const parts: string[] = []
-  if (result.errors.length) parts.push(t.checks.toFix.replace('{count}', String(result.errors.length)))
-  if (result.warnings.length) parts.push(t.checks.toCheck.replace('{count}', String(result.warnings.length)))
-  return parts.length ? parts.join(' · ') : null
 }

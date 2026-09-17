@@ -36,8 +36,6 @@ export interface TaxSummaryRow {
   amount: number
 }
 
-export const makeTax = (id: string, label = 'VAT', rate = 0): TaxLine => ({ id, label, rate })
-
 /* Starting points offered in the inspector. Not law, just the rates people
    reach for most; every one of them is editable. */
 export const COMMON_TAXES: ReadonlyArray<{ label: string; rate: number; note: string }> = [
